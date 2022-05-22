@@ -6,31 +6,50 @@ use App\Http\Controllers\Controller;
 use App\Models\food_table;
 use App\Models\meal;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class food_tableController extends Controller
+class Food_tableController extends Controller
 {
     public function index($gymname)
     {   
         if (auth::check()){
-        $new_tables = user::where('')
-        $meals = meal::where('coach_id',Auth::user()->id)->get();
-        return view('diet.meal.dashboard')->with('meals',$meals)->with("gym_name", $gymname);
+        $dits=['active'=>0,'new'=>0,'check'=>0]; 
+
+        $new_tables = food_table::where([['food_table.coach_id',Auth::user()->id],['food_table.state',0]])
+                        ->leftJoin('users', 'food_table.user_id', '=', 'users.id')
+                        ->select('food_table.*', 'users.name as user_name')->get();
+        $dits['new']=count($new_tables);               
+        $check_table = food_table::where([['food_table.coach_id',Auth::user()->id],['food_table.state',1]])->get();
+        $dits['active']=count($check_table);
+        foreach($check_table as $c){
+            $diffInDays =  Carbon::now()->diffInDays($c->updated_at, time());
+            if ($diffInDays >= $c->days) {
+                $c->state = 2;
+                $result =$c->save();
+                $dits['active'] -= 1;
+            }
+        }
+        $tables_to_check = food_table::where([['food_table.coach_id',Auth::user()->id],['food_table.state',2]])
+        ->leftJoin('users', 'food_table.user_id', '=', 'users.id')
+        ->select('food_table.*', 'users.name as user_name')->get();
+        $dits['check']=count($tables_to_check);               
+        return view('diet.food_table.dashboard')->with('dits',$dits)->with('tables_to_check',$tables_to_check)
+        ->with('new_tables',$new_tables)->with("gym_name", $gymname);
         }else{return redirect('/login');}
     }
     
-    public function store($gymname,Request $request)
+    public function store($gymname,Request $request,$id)
     {   
-        /*-----------------------begin::store meal-----------------------*/
-        $meal = new meal();
-        $meal->name = $request['name'];
-        $meal->calories = $request['calories'];
-        $meal->details = $request['details'];
-        $meal->coach_id =  auth::user()->id;
-        $meal->gym_id = auth::user()->gym_id;
-        $result =$meal->save();
-        /*-----------------------end::store meal-----------------------*/
+        $food_table = food_table::where('user_id',$id)->first();
+
+        $food_table->days = $request['days'];
+        $food_table->note = $request['note'];
+        if ($food_table->days >0 and $food_table->meals) {
+            $food_table->state = 1;
+        }
+        $result =$food_table->save();
 
         return redirect()->back();
     }
@@ -38,29 +57,57 @@ class food_tableController extends Controller
     public function edit($gymname,$id)
     {   
         if (auth::check()){
-            $meal= meal::where('id', $id)->first();
-            $users = food_table::where('meals','like','%|'.$meal->id.'|%')->get();
-            return view('diet.meal.edit-meal')->with("gym_name", $gymname)->with('meal',$meal)->with('users',$users);
+            $food_table_meals= [];
+            $sum_calories = 0;
+            $user= user::where('id', $id)->first();
+            $food_table= food_table::where('user_id', $id)->first();
+            foreach (explode('|',$food_table->meals) as $f){
+                if ($f) {
+                    $meal = meal::where('id', $f)->first();
+                    $sum_calories += $meal->calories ;
+                    array_push($food_table_meals,$meal);               
+                } 
+            }
+            $meals = meal::where('coach_id',Auth::user()->id)->get();
+            return view('diet.food_table.edit-food_table')->with("gym_name", $gymname)
+            ->with('user',$user)->with('food_table',$food_table)->with('meals',$meals)
+            ->with('food_table_meals',$food_table_meals)->with('sum_calories',$sum_calories);
         }else{return redirect('/login');}
-
     }
 
     public function update(Request $request ,$gymname, $id)
     {  
-        $meal = meal::where('id',$id)->first();
-        if ($request['name']) {
-            $meal->name = $request['name'];
+        $food_table = food_table::where('user_id',$id)->first();
+        if ($request['add_mael']) {
+            if (!$food_table->meals) {
+                $food_table->meals += $request['add_mael'];
+            }else{
+                $food_table->meals = $food_table->meals .'|'.$request['add_mael'];
+            }
         }
-        if ($request['calories']) {
-            $meal->calories = $request['calories'];
+        if ($food_table->days >0 and $food_table->meals) {
+            $food_table->state = 1;
         }
-        if ($request['details']) {
-            $meal->details = $request['details'];
-        }
-        $result =$meal->save();
+        
+        $result =$food_table->save();
 
         return redirect()->back();
     }
-
+    public function food_table_search($gymname,Request $request)
+    {  
+        if (auth::check()) {
+            if (auth::check()) {
+                $users_gym_id=Auth::user()->gym_id*10000;
+                if($request['user_type']=='name'){$user = User::where([['name',$request['user']],['gym_id',Auth::user()->gym_id]])->first();}
+                elseif($request['user_type']=='phone'){$user = User::where('phone',$request['user'])->first();}
+                elseif($request['user_type']=='id'){$user = User::where('id',$request['user']+$users_gym_id)->first();}
+                if ($user) {
+                    $food_table = food_table::where('food_table.user_id', $user->id)->first();
+                    if ($food_table) {
+                        return redirect($gymname.'/'.'diet/food-table/'.$user->id);
+                    }else{return redirect()->back();}                    
+                }else{return redirect()->back();}
+        }else{return redirect('/login');}
+    }}
 
 }

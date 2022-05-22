@@ -12,7 +12,7 @@
 
 <div id="kt_content_container" class="container-xxl">
 	<div class="d-flex flex-column flex-lg-row">
-        @include('users.user-details')
+        @include('users.user-details',['user_wallet'=>true])
         <div class="flex-lg-row-fluid ms-lg-15">
             <div class="card pt-4 mb-6 mb-xl-9">
                 <!--begin::Card header-->

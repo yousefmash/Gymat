@@ -27,7 +27,7 @@
 			<!--end::Card toolbar-->
 		</div>
 		<div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 ">
-			<table id="users_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+			<table id="users_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded users_table">
 				<thead>
 					<tr class="fw-bold fs-6 text-muted">
 						<th>المعرف</th>
@@ -59,9 +59,9 @@
 								@endif
 							@endforeach</td>
 							<td>
-								<a href="{{url( $gym_name.'/gymat/edit/'.$g->id)}}" class="btn btn-icon btn-primary"><i class="bi bi-pencil-square fs-4"></i></a>
+								<a href="{{url( $gym_name.'/gymat/edit/'.$g->id)}}" class="btn btn-icon btn-primary"><i class="bi bi-pencil-square fs-7"></i></a>
 								<button type="button" data-item="{{$g->id}}" class="btn btn-icon btn-danger modal-class" data-bs-toggle="modal" data-bs-target="#kt_modal_2">
-									<i class="bi bi-trash-fill fs-4"></i>
+									<i class="bi bi-trash-fill fs-7"></i>
 								</button>
 							</td>						
 						</tr>

@@ -56,12 +56,12 @@
     </td>
     <td>
         <div class="form-check form-check-custom form-check-solid ">
-            <input class="form-check-input" type="checkbox" value="" id="{{'full_time_'.$gender.'_'.$day}}" name="{{'full_time_'.$day}}""/>
+            <input class="form-check-input" type="checkbox" value="" id="{{'full_time_'.$gender.'_'.$day}}" name="{{'full_time_'.$day}}"/>
         </div>
     </td>
     <td>
         <div class="form-check form-check-custom form-check-solid ">
-            <input class="form-check-input" type="checkbox" value="" id="{{'holiday_'.$gender.'_'.$day}}" name="{{'holiday_'.$day}}""/>
+            <input class="form-check-input" type="checkbox" value="" id="{{'holiday_'.$gender.'_'.$day}}" name="{{'holiday_'.$day}}"/>
         </div>
     </td>
 </tr>

@@ -199,6 +199,7 @@ class FinancialController extends Controller
                 if (!$food_table) {
                     $food_table = new food_table();
                     $food_table->user_id =  $id;
+                    $food_table->state = 0;
                 }
                 $food_table->coach_id = $request['coach'];
                 $result =$food_table->save();        
@@ -207,7 +208,8 @@ class FinancialController extends Controller
             $user_wallet = user_wallet::where('user_id', $id)->first();
             $total = $request['package_value']-$request['discount'];
             $user_wallet->total -=  $total;
-            #$result =$user_wallet->save();
+            $result =$user_wallet->save();
+
             return redirect($gymname.'/dashboard');
         }else{return redirect('/login');}
     }

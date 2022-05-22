@@ -2,13 +2,21 @@
 
 @section('Stylesheets')
 <link href="{{ asset("assets/plugins/custom/datatables/datatables.bundle.css")}}" rel="stylesheet" type="text/css"/>
-@endsection
+@endsection 
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">الحركات المالية</li>
 </ol>
+@endsection
+
+@section('toolbar_title')
+الحركات المالية
+@endsection
+
+@section('toolbar_button')
+@include('financial.add-receipt',['button'=> true])
 @endsection
 
 @section('admin_content')
@@ -73,38 +81,33 @@
 							<h2>الحركات المالية</h2>
 						</div>
 						<!--end::Card title-->
-						<!--begin::Card toolbar-->
-						<div class="card-toolbar">
-							@include('financial.add-receipt',['button'=> true])
-						</div>
-						<!--end::Card toolbar-->
 					</div>
 					<div class="card-body fs-6 py-15 px-10 py-lg-15 px-lg-15 ">
-						<table id="users_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded">
+						<table id="users_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded users_table">
 							<thead>
 								<tr class="fw-bold fs-6 text-muted">
+									<th>التاريخ</th>
 									<th>نوع العملية</th>
 									<th>القيمة</th>
 									<th>رقم الإيصال</th>
 									<th class="mw-sm-150px">ملاحظة النظام</th>
 									<th class="mw-sm-150px">ملاحظة المستخدم</th>
-									<th>التاريخ</th>
 									<th>تعديل</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach($movements as $m)
 									<tr>
+										<td>{{ $m->updated_at->format('h:i d/m/Y') }}</td>
 										<td>{{ $m->type }}</td>
 										<td>{{ $m->value }}</td>
 										<td>{{ $m->receipt_num }}</td>
 										<td>{{ $m->system_note }}</td>
 										<td>{{ $m->note }}</td>
-										<td>{{ $m->updated_at }}</td>
 										@if ($m->type != 'ترحيل')
 											<td>
-												<button type="button" data-item="{{$m->id}}" class="btn btn-icon btn-primary modal-update" data-bs-toggle="modal" data-bs-target="#edit_movements_modal">
-													<i class="bi bi-pencil-square fs-4"></i>
+												<button type="button" data-item="{{$m->id}}" class="btn btn-icon btn-primary  btn-xs modal-update" data-bs-toggle="modal" data-bs-target="#edit_movements_modal">
+													<i class="bi bi-pencil-square fs-7"></i>
 												</button>
 											</td>
 										@else

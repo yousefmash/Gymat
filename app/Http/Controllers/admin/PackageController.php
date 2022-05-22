@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\food_table;
 use App\Models\GYM;
 use App\Models\User;
 use App\Models\Package;
@@ -37,7 +38,7 @@ class PackageController extends Controller
         $package->gym_id = Auth::user()->gym_id;
 
         $result =$package->save();
-
+        
         return redirect()->back();
     }
 

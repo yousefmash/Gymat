@@ -11,7 +11,7 @@
 
 <div id="kt_content_container" class="container-xxl">
 	<div class="d-flex flex-column flex-lg-row">
-        @include('users.user-details')
+        @include('users.user-details',['user_wallet'=>true])
         <div class="flex-lg-row-fluid ms-lg-15">
             <!--begin::Form-->
             <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/contract/store/'.$user->id) }}">
@@ -212,7 +212,7 @@ if (document.querySelector('input[name="package"]')) {
       var package_price = document.getElementById("package_price");
       var package_value = document.getElementById("package_value");
       package_value.value = item;
-      package_price.innerHTML  = item;
+      package_price.innerHTML = item;
       total_value();
     });
   });

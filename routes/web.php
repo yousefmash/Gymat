@@ -9,8 +9,9 @@ use App\Http\Controllers\admin\GymController;
 use App\Http\Controllers\admin\PackageController;
 use App\Http\Controllers\admin\GymatController;
 use App\Http\Controllers\admin\FinancialController;
-use App\Http\Controllers\admin\food_tableController;
+use App\Http\Controllers\admin\Food_tableController;
 use App\Http\Controllers\admin\MealController;
+use App\Http\Controllers\admin\NoticeController;
 
 
 /*
@@ -41,7 +42,8 @@ Route::get('/{gymname}/users', [UserController::class, 'index'])->name('gym-user
 Route::get('/{gymname}/packages', [PackageController::class, 'index'])->name('users-packages');
 Route::get('/{gymname}/movements', [FinancialController::class, 'index'])->name('gym-movements');
 Route::get('/{gymname}/diet/meals', [MealController::class, 'index'])->name('diet-meals');
-Route::get('/{gymname}/diet/food-table', [food_tableController::class, 'index'])->name('diet-food_tables');
+Route::get('/{gymname}/diet/food-tables', [Food_tableController::class, 'index'])->name('diet-food_tables');
+Route::get('/{gymname}/notices', [NoticeController::class, 'index'])->name('notices');
 /*-----------------------end::menu-----------------------*/
 
 /*-----------------------begin::user URL-----------------------*/
@@ -91,10 +93,20 @@ Route::post('{gymname}/diet/meal/update/{id}', [MealController::class, 'update']
 Route::post('/{gymname}/diet/meal/destroy/{id}', [MealController::class, 'destroy'])->name('meal-destroy');
 
 /*-----------------------food-table URL-----------------------*/
-Route::post('/{gymname}/diet/food-table/store', [DietController::class, 'store'])->name('meal-store');
-Route::get('/{gymname}/diet/food-table/{id}', [DietController::class, 'edit'])->name('meal-edit');
-Route::post('{gymname}/diet/food-table/update/{id}', [DietController::class, 'update'])->name('meal-update');
-Route::post('/{gymname}/diet/food-table/destroy/{id}', [DietController::class, 'destroy'])->name('meal-destroy');
+Route::post('/{gymname}/diet/food-table/store/{id}', [Food_tableController::class, 'store'])->name('food-table-store');
+Route::get('/{gymname}/diet/food-table/{id}', [Food_tableController::class, 'edit'])->name('food-table-edit');
+Route::post('{gymname}/diet/food-table/update/{id}', [Food_tableController::class, 'update'])->name('food-table-update');
+Route::post('/{gymname}/diet/food-table/destroy/{id}', [Food_tableController::class, 'destroy'])->name('food-table-destroy');
+Route::post('/{gymname}/diet/food-table-search', [Food_tableController::class, 'food_table_search'])->name('food-table-search');
+Route::get('/{gymname}/diet/food-table/{id}', [Food_tableController::class, 'edit'])->name('Food_table-edit');
+Route::post('/{gymname}/diet/food-table/meal/store', [Food_tableController::class, 'store'])->name('Food_table-edit');
+
 /*-----------------------end::Diet URL-----------------------*/
 
+/*-----------------------begin::note URL-----------------------*/
+Route::post('/{gymname}/notices/store', [noticeController::class, 'store'])->name('notices-store');
+Route::post('/{gymname}/notices/destroy/{id}', [noticeController::class, 'destroy'])->name('notices-destroy');
+
+
+/*-----------------------end::note URL-----------------------*/
 Auth::routes();

@@ -37,10 +37,12 @@
                 <!--end::Position-->
                 <!--begin::Info-->
                 <!--begin::Info heading-->
+                @if ($user_wallet)
                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 mb-3">
                     <div class="fs-6 text-gray-800 fw-bolder">₪{{ $total }}</div>
                     <div class="fw-bold text-gray-400">رصيد المشترك</div>
                 </div>
+                @endif
             </div>
             <!--end::User Info-->
             <!--begin::Details toggle-->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\food_table;
 use App\Models\GYM;
 use App\Models\User;
 use App\Models\Package;
@@ -76,7 +77,7 @@ class UserController extends Controller
         if (auth::check()){
             $id += auth::user()->gym_id*10000;
             $user= user::where('users.id', $id)
-                        ->leftJoin('packages', 'users.package_id', '=', 'packages.id')
+            ->leftJoin('packages', 'users.package_id', '=', 'packages.id')
                         ->select('users.*', 'packages.name as package_name')
                         ->first();
             $gym_id = auth::user()->gym_id;
@@ -110,6 +111,10 @@ class UserController extends Controller
 
         /*-----------------------begin::delete user wallet-----------------------*/
         $result = user_wallet::where('uesr_id', $id)->delete();
+        /*-----------------------end::delete user wallet-----------------------*/
+
+        /*-----------------------begin::delete user wallet-----------------------*/
+        $result = food_table::where('uesr_id', $id)->delete();
         /*-----------------------end::delete user wallet-----------------------*/
 
         return redirect()->back();
