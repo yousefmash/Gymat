@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function index($gymname)
-    {   
+    {   dd(auth::check());
         if (auth::check()){
             $gym_name= GYM::where('id',Auth::User()->gym_id)->first();
             if ($gym_name->name==$gymname ) {
