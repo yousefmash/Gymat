@@ -6,8 +6,8 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( $gym_name."/diet/meals")}}" class="px-3">الوجبات</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/diet/meals")}}" class="px-3">الوجبات</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الوجبة</li>
 </ol>
 @endsection
@@ -73,7 +73,7 @@
                 <!--begin::Card body-->
                 <div class="card-body pt-0">
 				    <!--begin::Form-->
-                    <form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/diet/meal/update'.'/'.$meal->id) }}">
+                    <form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/diet/meal/update'.'/'.$meal->id) }}">
                         @csrf
                         <!--begin::Input group-->
                         <div class="fv-row mb-10 fv-plugins-icon-container">
@@ -83,7 +83,7 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input class="form-control form-control-solid" placeholder="{{  $meal->name }}" name="name">
+                            <input class="form-control form-control-solid" value="{{  $meal->name }}" name="name">
                             <!--end::Input-->
                             <div class="fv-plugins-message-container invalid-feedback"></div>
                         </div>
@@ -105,7 +105,7 @@
                                             <td>
                                                 <div class="d-flex">
                                                     <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                        <input class="form-control form-control-solid" type="text" placeholder="{{  $meal->calories }}" name="calories">
+                                                        <input class="form-control form-control-solid" type="text" value="{{  $meal->calories }}" name="calories">
                                                     </label>
                                                 </div>
                                             </td>
@@ -122,7 +122,7 @@
                                             <td>
                                                 <!--begin::Checkbox-->
                                                 <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                    <textarea class="form-control form-control-solid rounded-3" placeholder="{{  $meal->details }}" name="details" rows="4"></textarea>
+                                                    <textarea class="form-control form-control-solid rounded-3" placeholder="{{  $meal->details }}" name="details" rows="4">{{  $meal->details }}</textarea>
                                                 </label>
                                                 <!--end::Checkbox-->
                                             </td>

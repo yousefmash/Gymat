@@ -3,17 +3,21 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\store_Food_tableRequest;
+use App\Http\Requests\update_Food_tableRequest;
+use App\Http\Requests\User_SearchRequest;
 use App\Models\food_table;
 use App\Models\meal;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class Food_tableController extends Controller
 {
-    public function index($gymname)
-    {   
+    public function index()
+    {
         if (auth::check()){
         $dits=['active'=>0,'new'=>0,'check'=>0]; 
 
@@ -36,12 +40,12 @@ class Food_tableController extends Controller
         ->select('food_table.*', 'users.name as user_name')->get();
         $dits['check']=count($tables_to_check);               
         return view('diet.food_table.dashboard')->with('dits',$dits)->with('tables_to_check',$tables_to_check)
-        ->with('new_tables',$new_tables)->with("gym_name", $gymname);
+        ->with('new_tables',$new_tables);
         }else{return redirect('/login');}
     }
     
-    public function store($gymname,Request $request,$id)
-    {   
+    public function store(store_Food_tableRequest $request,$id)
+    {
         $food_table = food_table::where('user_id',$id)->first();
 
         $food_table->days = $request['days'];
@@ -55,7 +59,7 @@ class Food_tableController extends Controller
     }
     
     public function edit($gymname,$id)
-    {   
+    {
         if (auth::check()){
             $food_table_meals= [];
             $sum_calories = 0;
@@ -69,22 +73,20 @@ class Food_tableController extends Controller
                 } 
             }
             $meals = meal::where('coach_id',Auth::user()->id)->get();
-            return view('diet.food_table.edit-food_table')->with("gym_name", $gymname)
+            return view('diet.food_table.edit-food_table')
             ->with('user',$user)->with('food_table',$food_table)->with('meals',$meals)
             ->with('food_table_meals',$food_table_meals)->with('sum_calories',$sum_calories);
         }else{return redirect('/login');}
     }
 
-    public function update(Request $request ,$gymname, $id)
+    public function update($gymname,update_Food_tableRequest $request , $id)
     {  
         $food_table = food_table::where('user_id',$id)->first();
-        if ($request['add_mael']) {
             if (!$food_table->meals) {
                 $food_table->meals += $request['add_mael'];
             }else{
                 $food_table->meals = $food_table->meals .'|'.$request['add_mael'];
             }
-        }
         if ($food_table->days >0 and $food_table->meals) {
             $food_table->state = 1;
         }
@@ -93,7 +95,7 @@ class Food_tableController extends Controller
 
         return redirect()->back();
     }
-    public function food_table_search($gymname,Request $request)
+    public function food_table_search(User_SearchRequest $request)
     {  
         if (auth::check()) {
             if (auth::check()) {
@@ -104,10 +106,24 @@ class Food_tableController extends Controller
                 if ($user) {
                     $food_table = food_table::where('food_table.user_id', $user->id)->first();
                     if ($food_table) {
-                        return redirect($gymname.'/'.'diet/food-table/'.$user->id);
+                        return redirect(Cookie::get('gym_name').'/'.'diet/food-table/'.$user->id);
                     }else{return redirect()->back();}                    
                 }else{return redirect()->back();}
         }else{return redirect('/login');}
     }}
+    public function destroy ($gymname,$user_id,$meal_num)
+    {
+        $food_table = food_table::where('user_id', $user_id)->first();
+        $meals = explode('|',$food_table->meals);
+        unset($meals[$meal_num]);
+        $new_meals ='';
+        foreach ($meals as $m) {
+            $new_meals = $new_meals.$m.'|';
+        }
+        $new_meals = substr($new_meals, 0, -1);
+        $food_table->meals = $new_meals;
+        $result =$food_table->save();
+        return redirect()->back();
+    }
 
 }

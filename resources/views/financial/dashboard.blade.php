@@ -6,13 +6,9 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">الحركات المالية</li>
 </ol>
-@endsection
-
-@section('toolbar_title')
-الحركات المالية
 @endsection
 
 @section('toolbar_button')
@@ -24,7 +20,6 @@
 	<div class="tab-content">
 		<!--begin::Tab pane-->
 		<div class="tab-pane fade show active" role="tab-panel">
-			<!--begin::Orders-->
 			<div class="d-flex flex-column gap-7 gap-lg-10">
 				<div class="d-flex flex-column flex-xl-row gap-7 gap-lg-10">
 					<div class="card card-flush py-4 flex-row-fluid overflow-hidden">
@@ -73,7 +68,7 @@
 						<!--end::Card body-->
 					</div>
 				</div>
-				<!--begin::Product List-->
+				<!--begin::financial List-->
 				<div class="card card-xl-stretch mb-5 mb-xl-8">
 					<div class="card-header border-0">
 						<!--begin::Card title-->
@@ -87,6 +82,7 @@
 							<thead>
 								<tr class="fw-bold fs-6 text-muted">
 									<th>التاريخ</th>
+									<th>رقم الإيصال</th>
 									<th>نوع العملية</th>
 									<th>القيمة</th>
 									<th>رقم الإيصال</th>
@@ -99,6 +95,7 @@
 								@foreach($movements as $m)
 									<tr>
 										<td>{{ $m->updated_at->format('h:i d/m/Y') }}</td>
+										<td>{{ $m->receipt_num }}</td>
 										<td>{{ $m->type }}</td>
 										<td>{{ $m->value }}</td>
 										<td>{{ $m->receipt_num }}</td>
@@ -119,9 +116,8 @@
 						</table>
 					</div>
 				</div>
-				<!--end::Product List-->
+				<!--end::financial List-->
 			</div>
-			<!--end::Orders-->
 		</div>
 		<!--end::Tab pane-->
 	</div>
@@ -132,7 +128,7 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body d-block justify-content-center">
-				<form action="{{ URL( $gym_name.'/collect-amount') }}" id='collect_amount_form' method="post">
+				<form action="{{ URL( Cookie::get('gym_name').'/collect-amount') }}" id='collect_amount_form' method="post">
 					@csrf
 					<label class="form-check-label d-flex justify-content-center fs-2" for="form_checkbox">
 						المبلغ المراد تحصيله:

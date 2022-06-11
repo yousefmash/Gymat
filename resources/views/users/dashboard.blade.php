@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">المشتركين</li>
 </ol>
 @endsection
@@ -64,7 +64,7 @@
 								@endswitch
 							</td>
 							<td>
-								<a href="{{url( $gym_name.'/user/edit/'.$u->id)}}" class="btn btn-icon btn-primary"><i class="bi bi-pencil-square fs-7"></i></a>
+								<a href="{{url( Cookie::get('gym_name').'/user/edit/'.$u->id)}}" class="btn btn-icon btn-primary"><i class="bi bi-pencil-square fs-7"></i></a>
 								<button type="button" data-item="{{$u->id}}" class="btn btn-icon btn-danger modal-class" data-bs-toggle="modal" data-bs-target="#destroy_user">
 									<i class="bi bi-trash-fill fs-7"></i>
 								</button>

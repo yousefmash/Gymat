@@ -13,7 +13,7 @@
 			<!--begin::Modal body-->
 			<div class="modal-body scroll-y mx-lg-5 my-7">
 				<!--begin::Form-->
-				<form id="new_notice" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/notices/store') }}">
+				<form id="new_notice" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/notices/store') }}">
 					@csrf
 					<!--begin::Scroll-->
 					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="new_notice_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#add_form_header" data-kt-scroll-wrappers="#new_notice_scroll" data-kt-scroll-offset="300px" style="">
@@ -26,24 +26,24 @@
 							<!--end::Label-->
 							<!--begin::Input-->
 							<div class="form-check form-check-custom form-check-solid mb-2">
-								<input class="form-check-input" type="radio" value="all"  id="all" name="target"/>
+								<input class="form-check-input radio" type="radio" value="all"  id="all" name="target"/>
 								<label class="form-check-label" for="flexCheckDefault">
 									جميع المشتركين
 								</label>
 							</div>
 							<div class="form-check form-check-custom form-check-solid mb-2">
-								<input class="form-check-input"  type="radio" value="will_over" id="will_over" name="target"/>
+								<input class="form-check-input radio"  type="radio" value="will_over" id="will_over" name="target"/>
 								<label class="form-check-label" for="flexCheckDefault">
 									مشتركين ستنتهي فترة إشتراكهم خلال أسبوع
 								</label>
 							</div>
 							<div class="form-check form-check-custom form-check-solid mb-2">
-								<input class="form-check-input"  type="radio" value="is_over" id="is_over" name="target"/>
+								<input class="form-check-input radio"  type="radio" value="is_over" id="is_over" name="target"/>
 								<label class="form-check-label" for="flexCheckDefault">
 									مشتركين إنتهت فترة إشتراكهم
 								</label>
 							</div>
-							<div class="form-check form-check-custom form-check-solid mb-2">
+							<div  class="form-check form-check-custom form-check-solid mb-2">
 								<input class="form-check-input"  type="radio" value="user" id="user" name="target"/>
 								<label class="form-check-label" for="flexCheckDefault">
 									مشترك محدد
@@ -79,7 +79,7 @@
 											<td class="text-gray-800">المحتوى</td>
 											<td>
 												<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-													<textarea class="form-control form-control-solid rounded-3" name="content" rows="2"></textarea>												</label>
+													<textarea class="form-control form-control-solid rounded-3" name="content" rows="2"></textarea>
 												</label>
 											</td>
 										</tr>
@@ -112,14 +112,6 @@
 										<!--end::Table row-->
 										<!--begin::Table row-->
 										<tr id="user_tr">
-											<td class="text-gray-800" id="user_id_title">معرف المشترك
-												<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="يتم الإدخال عن تحديد مشترك محدد" aria-label="يتم الإدخال عن تحديد مشترك محدد"></i>
-											</td><!--end::Label-->
-											<td>
-												<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-													<input class="form-control form-control-solid" disabled type="text" value="" id="user_id" name="user_id">
-												</label>
-											</td>
 										</tr>
 										<!--end::Table row-->
 									</tbody>

@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">باقات المشتركين</li>
 </ol>
 @endsection
@@ -73,7 +73,7 @@
 					<!--end::Card body-->
 					<!--begin::Card footer-->
 					<div class="card-footer flex-wrap pt-0">
-						<a href="{{ url($gym_name.'/package'.'/'.$p->id) }}" class="btn btn-light btn-active-primary my-1 me-2">تفاصيل الباقة</a>
+						<a href="{{ url(Cookie::get('gym_name').'/package'.'/'.$p->id) }}" class="btn btn-light btn-active-primary my-1 me-2">تفاصيل الباقة</a>
 						<button type="button" data-item="{{$p->id}}" class="btn btn-light btn-active-danger my-1 me-2 modal-class" data-bs-toggle="modal" data-bs-target="#destroy_package">
 						حذف الباقة	
 						</button>

@@ -2,7 +2,7 @@
 <div class="modal fade" tabindex="-1" id="food_table">
 	<div class="modal-dialog">
 		<div class="modal-content">
-            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/diet/food-table/update/'.$user->id) }}">
+            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/diet/food-table/update/'.$user->id) }}">
                 @csrf
 			    <div class="modal-body d-block justify-content-center">
 					<label class="form-check-label d-flex justify-content-center fs-2" for="form_checkbox">

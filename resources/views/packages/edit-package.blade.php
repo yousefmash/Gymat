@@ -6,8 +6,8 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( $gym_name."/packages")}}" class="px-3">باقات المشتركين</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/packages")}}" class="px-3">باقات المشتركين</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الباقة</li>
 </ol>
 @endsection
@@ -100,7 +100,7 @@
                                     <tr class="fw-bold fs-6 text-muted">
                                         <th>المعرف</th>
                                         <th>الإسم</th>
-                                        <th>تاريخ الإشتراك</th>
+                                        <th>رقم الهاتف</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -140,7 +140,7 @@
 			<!--begin::Modal body-->
 			<div class="modal-body scroll-y mx-lg-5 my-7">
 				<!--begin::Form-->
-				<form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/package/update'.'/'.$package->id) }}">
+				<form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/package/update'.'/'.$package->id) }}">
 					@csrf
 					<!--begin::Scroll-->
 					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="add_form_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#add_form_header" data-kt-scroll-wrappers="#add_form_scroll" data-kt-scroll-offset="300px" style="">
@@ -152,7 +152,7 @@
 							</label>
 							<!--end::Label-->
 							<!--begin::Input-->
-							<input class="form-control form-control-solid" placeholder="{{  $package->name }}" name="name">
+							<input class="form-control form-control-solid" value="{{  $package->name }}" name="name">
 							<!--end::Input-->
 							<div class="fv-plugins-message-container invalid-feedback"></div>
 						</div>
@@ -174,7 +174,7 @@
 											<td>
 												<div class="d-flex">
 													<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-														<input class="form-control form-control-solid" type="text" placeholder="{{  $package->price }}" name="price">
+														<input class="form-control form-control-solid" type="text" value="{{  $package->price }}" name="price">
 													</label>
 												</div>
 											</td>
@@ -187,7 +187,7 @@
 											<td>
 												<div class="d-flex">
 													<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-														<input class="form-control form-control-solid" type="text" placeholder="{{  $package->workout_days }}" name="workout_days">
+														<input class="form-control form-control-solid" type="text" value="{{  $package->workout_days }}" name="workout_days">
 													</label>
 												</div>
 											</td>
@@ -205,7 +205,7 @@
 												<!--begin::Wrapper-->
 												<div class="d-flex">
 													<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-														<input class="form-control form-control-solid" type="text" placeholder="{{  $package->duration }}" name="duration">
+														<input class="form-control form-control-solid" type="text" value="{{  $package->duration }}" name="duration">
 													</label>
 												</div>
 												<!--end::Wrapper-->
@@ -285,7 +285,7 @@
 												<div class="d-flex">
 													<!--begin::Checkbox-->
 													<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-														<input class="form-control form-control-solid" type="text" placeholder="{{  $package->sauna }}" name="sauna">
+														<input class="form-control form-control-solid" type="text" value="{{  $package->sauna }}" name="sauna">
 													</label>
 													<!--end::Checkbox-->
 												</div>
@@ -306,7 +306,7 @@
 												<div class="d-flex">
 													<!--begin::Checkbox-->
 													<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-														<input class="form-control form-control-solid" type="text" placeholder="{{  $package->steam }}" name="steam">
+														<input class="form-control form-control-solid" type="text" value="{{  $package->steam }}" name="steam">
 													</label>
 													<!--end::Checkbox-->
 												</div>
@@ -324,7 +324,7 @@
 											<td>
 												<!--begin::Checkbox-->
 												<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-													<textarea class="form-control form-control-solid rounded-3" placeholder="{{  $package->note }}" name="note" rows="4"></textarea>
+													<textarea class="form-control form-control-solid rounded-3" value="{{  $package->note }}" name="note" rows="4"></textarea>
                                                 </label>
 												<!--end::Checkbox-->
 											</td>

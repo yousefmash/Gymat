@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GymatRequest;
 use App\Models\GYM;
-use App\Models\User;
 use App\Models\gym_Package;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 
 class GymatController extends Controller
@@ -15,7 +15,6 @@ class GymatController extends Controller
     public function index()
     {   
         if (auth::check()){
-            $gymname='admin';
             $gymat = Gym::get();
             foreach($gymat as $gym){
                 if ($gym->logo) {
@@ -23,14 +22,13 @@ class GymatController extends Controller
                 }
             }
             $gym_packages = gym_Package::get();
-            return view('gymat.dashboard')->with("gym_name", $gymname)->with("gymat", $gymat)->with("gym_packages", $gym_packages);
+            return view('gymat.dashboard')->with("gymat", $gymat)->with("gym_packages", $gym_packages);
 
         }else{return redirect('/login');}
     }
 
-    public function store(Request $request)
+    public function store(GymatRequest $request)
     {   
-        $gymname='admin';
         $gym = new GYM();
         $gym->name = $request['name'];
         $gym->phone = $request['phone'];
@@ -44,7 +42,6 @@ class GymatController extends Controller
     public function edit($id)
     {   
         if (auth::check()){
-            $gymname='admin';
             $gym = Gym::where('gym.id',$id)
             ->leftJoin('users', 'gym.user_id', '=', 'users.id')
             ->select('gym.*', 'users.name as user_name')
@@ -53,14 +50,13 @@ class GymatController extends Controller
                 $gym->logo = env('APP_URL').'/'.'storage/media/gym/'.$gym->logo;
             }
             $gym_packages = gym_Package::get();
-            return view('gymat.edit-gym')->with("gym_name", $gymname)->with('gym',$gym)->with('gym_packages',$gym_packages);
+            return view('gymat.edit-gym')->with('gym',$gym)->with('gym_packages',$gym_packages);
         }else{return redirect('/login');}
 
     }
 
-    public function update(Request $request , $id)
+    public function update(GymatRequest $request , $id)
     {  
-        $gymname='admin';
         $gym = GYM::where('id',$id)->first();
         if ($request['logo']) {
             /*  Storage image  */

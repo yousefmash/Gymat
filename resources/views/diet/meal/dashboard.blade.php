@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">الوجبات</li>
 </ol>
 @endsection
@@ -31,7 +31,7 @@
 				<!--end::Body-->
 				<!--begin::Footer-->
 				<div class="card-footer">
-					<a href="{{ url($gym_name.'/diet/meal'.'/'.$m->id) }}" class="btn btn-light btn-active-primary my-1 me-2">تفاصيل الوجبة</a>
+					<a href="{{ url(Cookie::get('gym_name').'/diet/meal'.'/'.$m->id) }}" class="btn btn-light btn-active-primary my-1 me-2">تفاصيل الوجبة</a>
 					<button type="button" data-item="{{$m->id}}" class="btn btn-light btn-active-danger my-1 me-2 modal-class" data-bs-toggle="modal" data-bs-target="#destroy_meal">
 					حذف الوجبة	
 					</button>

@@ -10,8 +10,10 @@ use App\Http\Controllers\admin\PackageController;
 use App\Http\Controllers\admin\GymatController;
 use App\Http\Controllers\admin\FinancialController;
 use App\Http\Controllers\admin\Food_tableController;
+use App\Http\Controllers\admin\Gym_PackageController;
 use App\Http\Controllers\admin\MealController;
 use App\Http\Controllers\admin\NoticeController;
+use App\Http\Controllers\admin\SessionController;
 
 
 /*
@@ -38,9 +40,11 @@ Route::post('/admin/gymat/update/{id}', [GymatController::class, 'update'])->nam
 /*-----------------------begin::Menu URL-----------------------*/
 Route::get('/{gymname}/dashboard', [AdminController::class, 'index'])->name('gym-dashboard');
 Route::get('/admin/gymat', [GymatController::class, 'index'])->name('admin-gymat');
+Route::get('/admin/gym-package', [Gym_PackageController::class, 'index'])->name('users-packages');
 Route::get('/{gymname}/users', [UserController::class, 'index'])->name('gym-users');
 Route::get('/{gymname}/packages', [PackageController::class, 'index'])->name('users-packages');
 Route::get('/{gymname}/movements', [FinancialController::class, 'index'])->name('gym-movements');
+Route::get('/{gymname}/sessions', [SessionController::class, 'index'])->name('gym-sessions');
 Route::get('/{gymname}/diet/meals', [MealController::class, 'index'])->name('diet-meals');
 Route::get('/{gymname}/diet/food-tables', [Food_tableController::class, 'index'])->name('diet-food_tables');
 Route::get('/{gymname}/notices', [NoticeController::class, 'index'])->name('notices');
@@ -59,19 +63,26 @@ Route::post('/{gymname}/gym/update/{id}', [GymController::class, 'update'])->nam
 Route::post('/{gymname}/gym/time-table/{id}', [GymController::class, 'update_time'])->name('gym-update-time');
 /*-----------------------end::gym-----------------------*/
 
+/*-----------------------begin::gymat URL-----------------------*/
+Route::post('/admin/gymat/store', [GymatController::class, 'store'])->name('admin-gym-store');
+Route::get('/admin/gymat/edit/{id}', [GymatController::class, 'edit'])->name('admin-gym-edit');
+Route::post('/admin/gymat/update/{id}', [GymatController::class, 'update'])->name('admin-gym-update');
+Route::post('/admin/gymat/destroy/{id}', [GymatController::class, 'destroy'])->name('admin-gym-destroy');
+/*-----------------------end::gymat-----------------------*/
+
+/*-----------------------begin::gym_packages URL-----------------------*/
+Route::post('/admin/gym-package/store', [Gym_PackageController::class, 'store'])->name('gym-package-store');
+Route::get('/admin/gym-package/{id}', [Gym_PackageController::class, 'edit'])->name('gym-package-edit');
+Route::post('/admin/gym-package/update/{id}', [Gym_PackageController::class, 'update'])->name('gym-package-update');
+Route::post('/admin/gym-package/destroy/{id}', [Gym_PackageController::class, 'destroy'])->name('gym-package-destroy');
+/*-----------------------end::gym_packages-----------------------*/
+
 /*-----------------------begin::packages URL-----------------------*/
 Route::post('/{gymname}/package/store', [PackageController::class, 'store'])->name('package-store');
 Route::get('/{gymname}/package/{id}', [PackageController::class, 'edit'])->name('package-edit');
 Route::post('/{gymname}/package/update/{id}', [PackageController::class, 'update'])->name('package-update');
 Route::post('/{gymname}/package/destroy/{id}', [PackageController::class, 'destroy'])->name('package-destroy');
 /*-----------------------end::packages-----------------------*/
-
-/*-----------------------begin::gymat URL-----------------------*/
-Route::post('/admin/gymat/store', [GymatController::class, 'store'])->name('admin-gym-store');
-Route::get('/admin/gymat/edit/{id}', [GymatController::class, 'edit'])->name('admin-gym-edit');
-Route::post('/admin/gymat/update/{id}', [GymatController::class, 'update'])->name('admin-gym-update');
-Route::post('/admin/gymat/destroy/{id}', [GymatController::class, 'destroy'])->name('admin-gym-destroy');
-/*-----------------------end::user-----------------------*/
 
 /*-----------------------begin::Financial URL-----------------------*/
 Route::post('/{gymname}/add-receipt', [FinancialController::class, 'store_receipt'])->name('add-receipt');
@@ -91,22 +102,24 @@ Route::post('/{gymname}/diet/meal/store', [MealController::class, 'store'])->nam
 Route::get('/{gymname}/diet/meal/{id}', [MealController::class, 'edit'])->name('meal-edit');
 Route::post('{gymname}/diet/meal/update/{id}', [MealController::class, 'update'])->name('meal-update');
 Route::post('/{gymname}/diet/meal/destroy/{id}', [MealController::class, 'destroy'])->name('meal-destroy');
-
 /*-----------------------food-table URL-----------------------*/
 Route::post('/{gymname}/diet/food-table/store/{id}', [Food_tableController::class, 'store'])->name('food-table-store');
 Route::get('/{gymname}/diet/food-table/{id}', [Food_tableController::class, 'edit'])->name('food-table-edit');
 Route::post('{gymname}/diet/food-table/update/{id}', [Food_tableController::class, 'update'])->name('food-table-update');
-Route::post('/{gymname}/diet/food-table/destroy/{id}', [Food_tableController::class, 'destroy'])->name('food-table-destroy');
+Route::post('/{gymname}/diet/food-table/{uesr_id}/destroy/{meal_num}', [Food_tableController::class, 'destroy'])->name('meal-food-table-destroy');
 Route::post('/{gymname}/diet/food-table-search', [Food_tableController::class, 'food_table_search'])->name('food-table-search');
 Route::get('/{gymname}/diet/food-table/{id}', [Food_tableController::class, 'edit'])->name('Food_table-edit');
 Route::post('/{gymname}/diet/food-table/meal/store', [Food_tableController::class, 'store'])->name('Food_table-edit');
-
 /*-----------------------end::Diet URL-----------------------*/
 
 /*-----------------------begin::note URL-----------------------*/
 Route::post('/{gymname}/notices/store', [noticeController::class, 'store'])->name('notices-store');
 Route::post('/{gymname}/notices/destroy/{id}', [noticeController::class, 'destroy'])->name('notices-destroy');
-
-
 /*-----------------------end::note URL-----------------------*/
+
+/*-----------------------begin::sessions URL-----------------------*/
+Route::post('/{gymname}/arrival-search', [SessionController::class, 'arrival_search'])->name('session-arrival-search');
+Route::post('/{gymname}/leave-search', [SessionController::class, 'leave_search'])->name('session-leave-search');
+/*-----------------------end::sessions URL-----------------------*/
+
 Auth::routes();

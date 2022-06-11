@@ -2,8 +2,8 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( $gym_name."/gym")}}" class="px-3">الصالات الرياضية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/gym")}}" class="px-3">الصالات الرياضية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الصالة الرياضية</li>
 </ol>
 @endsection
@@ -115,7 +115,7 @@
                         <div class="card-body pt-0 pb-5">
                             <!--begin::Table wrapper-->
                             <div class="table-responsive">
-                                <form class="form fv-plugins-bootstrap5 fv-plugins-framework" enctype="multipart/form-data" method="post" action="{{ URL( $gym_name.'/gym/update/'.$gym->id) }}">
+                                <form class="form fv-plugins-bootstrap5 fv-plugins-framework" enctype="multipart/form-data" method="post" action="{{ URL( Cookie::get('gym_name').'/gym/update/'.$gym->id) }}">
                                     @csrf
                                     <!--begin::Table-->
                                     <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
@@ -157,15 +157,15 @@
                                             </tr>
                                             <tr>
                                                 <td>إسم الصالة</td>
-                                                <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $gym->name }}" name="name" autocomplete="off"></td>
+                                                <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $gym->name }}" name="name" autocomplete="off"></td>
                                             </tr>
                                             <tr>
                                                 <td>رقم الجوال</td>
-                                                <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $gym->phone }}" name="phone" autocomplete="off"></td>
+                                                <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $gym->phone }}" name="phone" autocomplete="off"></td>
                                             </tr>
                                             <tr>
                                                 <td>العنوان</td>
-                                                <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $gym->address }}" name="address" autocomplete="off"></td>
+                                                <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $gym->address }}" name="address" autocomplete="off"></td>
                                            </td>
                                             </tr>
                                         </tbody>
@@ -228,7 +228,7 @@
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="men" role="tabpanel">
-                                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/gym/time-table/'.$gym->id) }}">
+                                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/gym/time-table/'.$gym->id) }}">
                                         @csrf
                                         <input type="hidden" name="type" value="men">
                                         <!--begin::Table wrapper-->
@@ -300,7 +300,7 @@
                                     </form>
                                 </div>
                                 <div class="tab-pane fade" id="women" role="tabpanel">
-                                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/gym/time-table/'.$gym->id) }}">
+                                    <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/gym/time-table/'.$gym->id) }}">
                                         @csrf       
                                         <input type="hidden" name="type" value="women">
                                         <!--begin::Table wrapper-->

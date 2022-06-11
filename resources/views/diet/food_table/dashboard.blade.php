@@ -6,7 +6,7 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">الأنظمة الغذائية</li>
 </ol>
 @endsection
@@ -80,7 +80,6 @@
 							<div class="card-header align-items-center border-0 mt-4">
 								<h3 class="card-title align-items-start flex-column">
 									<span class="fw-bolder text-dark">طلبات الأنظمة غذائية</span>
-									<span class="text-muted mt-1 fw-bold fs-7">Articles and publications</span>
 								</h3>
 							</div>
 							<!--end::Header-->
@@ -102,7 +101,7 @@
 												<td>{{ $n->user_name}}</td>
 												<td>{{ $n->user_weight }}</td>
 												<td>
-													<a data-item="{{$n->id}}" class="btn btn-icon btn-primary modal-update" href="{{ url($gym_name.'/diet/food-table/'.$n->user_id) }}" >
+													<a data-item="{{$n->id}}" class="btn btn-icon btn-primary modal-update" href="{{ url(Cookie::get('gym_name').'/diet/food-table/'.$n->user_id) }}" >
 														<i class="bi bi-plus fs-2"></i>
 													</a>
 												</td>
@@ -122,7 +121,6 @@
 							<div class="card-header align-items-center border-0 mt-4">
 								<h3 class="card-title align-items-start flex-column">
 									<span class="fw-bolder text-dark">مراجعة الأنظمة غذائية</span>
-									<span class="text-muted mt-1 fw-bold fs-7">Articles and publications</span>
 								</h3>
 							</div>
 							<!--end::Header-->
@@ -144,7 +142,7 @@
 												<td>{{ $c->user_name}}</td>
 												<td>{{ $c->user_weight }}</td>
 												<td>
-													<a  data-item="{{$c->id}}" class="btn btn-icon btn-primary modal-update" href="{{ url($gym_name.'/diet/food-table/'.$c->user_id) }}">
+													<a  data-item="{{$c->id}}" class="btn btn-icon btn-primary modal-update" href="{{ url(Cookie::get('gym_name').'/diet/food-table/'.$c->user_id) }}">
 														<i class="bi bi-pencil-square fs-7"></i>
 													</a>
 												</td>
@@ -165,7 +163,7 @@
 	</div>
 </div>
 
-@include('financial.user-search',['url'=>'diet/food-table-search','id'=>'food_table'])
+@include('financial.user-search',['url'=>'diet/food-table-search','id'=>'food_table','header'=>'بحث عن مشترك'])
 @endsection
 @section('Javascript')
 <script src="{{ asset("assets/plugins/custom/datatables/datatables.bundle.js")}}"></script>

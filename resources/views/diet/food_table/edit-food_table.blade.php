@@ -3,8 +3,8 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( $gym_name."/users")}}" class="px-3">الأنظمة الغذائية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/users")}}" class="px-3">الأنظمة الغذائية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل النظام للمشترك</li>
 </ol>
 @endsection
@@ -37,7 +37,7 @@
                 <div class="card-body pt-0 pb-5">
                     <!--begin::Table wrapper-->
                     <div class="table-responsive">
-                        <form method="POST" action="{{ URL( $gym_name.'/diet/food-table/store/'.$user->id) }}">
+                        <form method="POST" action="{{ URL( Cookie::get('gym_name').'/diet/food-table/store/'.$user->id) }}">
                             @csrf
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
@@ -95,6 +95,9 @@
                 <div class="card-body">
                     <!--begin::Addresses-->
                     <div class="row gx-9 gy-6">
+                        @php
+                            $meal_num = 0;
+                        @endphp
                         @foreach ($food_table_meals as $m)
                             <!--begin::Col-->
                         <div class="col-xl-6">
@@ -118,7 +121,7 @@
                                     <!--begin::Card toolbar-->
                                     <div class="card-toolbar m-0">
                                         <!--begin::Menu-->
-                                        <button type="button" data-item="{{$m->id}}" class="btn btn-icon btn-danger modal-class" data-bs-toggle="modal" data-bs-target="#destroy_user">
+                                        <button type="button" data-item="{{$meal_num}}" class="btn btn-icon btn-danger modal-class" data-bs-toggle="modal" data-bs-target="#destroy_meal">
                                             <i class="bi bi-trash-fill fs-7"></i>
                                         </button>                            
                                     </div>
@@ -142,6 +145,9 @@
                                 <!--end::Card body-->
                             </div>
                         </div>
+                        @php
+                            $meal_num += 1;
+                        @endphp
                         <!--end::Col-->
                         @endforeach
                         <!--begin::Col-->
@@ -169,12 +175,31 @@
     </div>
 </div>
 @include('diet.food_table.add-food_table')
+<div class="modal fade" tabindex="-1" id="destroy_meal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body d-block justify-content-center">
+				<p class="d-flex justify-content-center"><i class="bi bi-x-circle text-danger fa-6x"></i></p>
+				<label class="form-check-label d-flex justify-content-center fs-2" for="form_checkbox">
+					هل تريد حذف الوجبة ؟
+				</label>
+			</div>
+			<div class="modal-footer d-flex justify-content-center">
+				<form action="#" id='lineitem' method="post">
+					@csrf
+					<input type="submit" class="btn btn-danger" type="submit" value="حذف">
+					<button type="button" class="btn btn-light  ml-3" data-bs-dismiss="modal">إلغاء</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 @section('Javascript')
 <script >
 	$(document).on("click", ".modal-class", function () {
 	   var itemid= $(this).attr('data-item');
-	   $("#lineitem").attr("action","diet/meal/destroy/"+itemid)
+	   $("#lineitem").attr("action",{{ $user->id }}+"/destroy/"+itemid)
 	});
 </script>
 @endsection

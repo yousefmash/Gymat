@@ -2,8 +2,8 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( $gym_name."/users")}}" class="px-3">المشتركين</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/users")}}" class="px-3">المشتركين</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل المشترك</li>
 </ol>
 @endsection
@@ -37,7 +37,7 @@
                     <!--begin::Table wrapper-->
                     <div class="table-responsive">
                         <!--begin::Form-->
-                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/user/update/'.$user->id) }}">
+                        <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/user/update/'.$user->id) }}">
                             @csrf
                             <!--begin::Table-->
                             <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
@@ -45,11 +45,11 @@
                                 <tbody class="fs-6 fw-bold text-gray-600">
                                     <tr>
                                         <td>الإسم</td>
-                                        <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $user->name }}" name="name" autocomplete="off"></td>
+                                        <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $user->name }}" name="name" autocomplete="off"></td>
                                     </tr>
                                     <tr>
                                         <td>رقم الجوال</td>
-                                        <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $user->phone }}" name="phone" autocomplete="off"></td>
+                                        <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $user->phone }}" name="phone" autocomplete="off"></td>
                                     </tr>
                                     <tr>
                                         <td>الجنس</td>

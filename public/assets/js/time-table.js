@@ -503,3 +503,19 @@ $(".T-time").flatpickr({
   noCalendar: true,
   dateFormat: "H:i",
 });
+
+$(".T-date").flatpickr({
+});
+$( ".radio" ).on( "click", function() {
+  $( "#user_tr" ).html('');
+});
+
+$( "#user" ).on( "click", function() {
+  $( "#user_tr" ).html( '<td class="text-gray-800" id="user_id_title">معرف المشترك</td>'+
+                        '<!--end::Label-->'+
+                        '<td>'+
+                          '<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">'+
+                            '<input class="form-control form-control-solid" type="text" value="" id="user_id" name="user_id">'+
+                          '</label>'+
+                        '</td>');
+});

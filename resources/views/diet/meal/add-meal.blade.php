@@ -13,7 +13,7 @@
 			<!--begin::Modal body-->
 			<div class="modal-body scroll-y mx-lg-5 my-7">
 				<!--begin::Form-->
-				<form id="add_meal" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/diet/meal/store') }}">
+				<form id="add_meal" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/diet/meal/store') }}">
 					@csrf
 					<!--begin::Scroll-->
 					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="add_meal_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#add_meal_header" data-kt-scroll-wrappers="#add_meal_scroll" data-kt-scroll-offset="300px" style="">

@@ -2,11 +2,11 @@
 <div class="modal fade" tabindex="-1" id="Search-{{ $id }}">
 	<div class="modal-dialog">
 		<div class="modal-content">
-            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( $gym_name.'/'.$url) }}">
+            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/'.$url) }}">
                 @csrf
 			    <div class="modal-body d-block justify-content-center">
 					<label class="form-check-label d-flex justify-content-center fs-2" for="form_checkbox">
-                        بحث عن مشترك
+                        {{ $header }}
                     </label>
 					<div class="mt-4 mx-20">
                         <!--begin::Form group-->

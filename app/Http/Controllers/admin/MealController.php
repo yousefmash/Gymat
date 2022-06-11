@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\MealRequest;
 use App\Models\food_table;
 use App\Models\meal;
 use App\Models\User;
@@ -11,15 +12,15 @@ use Illuminate\Support\Facades\Auth;
 
 class MealController extends Controller
 {
-    public function index($gymname)
+    public function index()
     {   
         if (auth::check()){
         $meals = meal::where('coach_id',Auth::user()->id)->get();
-        return view('diet.meal.dashboard')->with('meals',$meals)->with("gym_name", $gymname);
+        return view('diet.meal.dashboard')->with('meals',$meals);
         }else{return redirect('/login');}
     }
     
-    public function store($gymname,Request $request)
+    public function store(MealRequest $request)
     {   
         /*-----------------------begin::store meal-----------------------*/
         $meal = new meal();
@@ -39,23 +40,17 @@ class MealController extends Controller
         if (auth::check()){
             $meal= meal::where('id', $id)->first();
             $users = food_table::where('meals','like','%|'.$meal->id.'|%')->get();
-            return view('diet.meal.edit-meal')->with("gym_name", $gymname)->with('meal',$meal)->with('users',$users);
+            return view('diet.meal.edit-meal')->with('meal',$meal)->with('users',$users);
         }else{return redirect('/login');}
 
     }
 
-    public function update(Request $request ,$gymname, $id)
+    public function update(MealRequest $request , $id)
     {  
         $meal = meal::where('id',$id)->first();
-        if ($request['name']) {
-            $meal->name = $request['name'];
-        }
-        if ($request['calories']) {
-            $meal->calories = $request['calories'];
-        }
-        if ($request['details']) {
-            $meal->details = $request['details'];
-        }
+        $meal->name = $request['name'];
+        $meal->calories = $request['calories'];
+        $meal->details = $request['details'];
         $result =$meal->save();
 
         return redirect()->back();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PackagesRequest;
 use App\Models\food_table;
 use App\Models\GYM;
 use App\Models\User;
@@ -13,16 +14,16 @@ use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
-    public function index($gymname)
+    public function index()
     {   
         if (auth::check()){
             $packages = Package::where('gym_id',Auth::user()->gym_id)->get();
-            return view('packages.dashboard')->with('packages',$packages)->with("gym_name", $gymname);
+            return view('packages.dashboard')->with('packages',$packages);
 
         }else{return redirect('/login');}
     }
 
-    public function store($gymname,Request $request)
+    public function store(PackagesRequest $request)
     {   
         $package = new Package();
         $package->name = $request['name'];
@@ -47,12 +48,12 @@ class PackageController extends Controller
         if (auth::check()){
             $package= Package::where('packages.id', $id)->first();
             $users= User::where('package_id',$package->id)->get();
-            return view('packages.edit-package')->with("gym_name", $gymname)->with('package',$package)->with('users',$users);
+            return view('packages.edit-package')->with('package',$package)->with('users',$users);
         }else{return redirect('/login');}
 
     }
 
-    public function update(Request $request ,$gymname, $id)
+    public function update(PackagesRequest $request , $id)
     {  
         $package = Package::where('id',$id)->first();
         if ($request['name']) {
@@ -91,7 +92,7 @@ class PackageController extends Controller
     }
 
 
-    public function destroy($gymname,$id)
+    public function destroy($id)
     {   
         $package = Package::where('id', $id)->first();
         $user = User::where('package_id',$package->id)->first();

@@ -27,12 +27,12 @@ class GymController extends Controller
             $women_table = gym_work_time::where([
                 ['gym_id', '=', $id],
                 ['gender','women']],)->first();
-            return view('gym.edit-gym')->with("gym_name", $gymname)->with('gym',$gym)->with('men_table',$men_table)->with('women_table',$women_table);
+            return view('gym.edit-gym')->with('gym',$gym)->with('men_table',$men_table)->with('women_table',$women_table);
         }else{return redirect('/login');}
 
     }
 
-    public function update(Request $request ,$gymname, $id)
+    public function update(Request $request , $id)
     {  
         $gym = GYM::where('id',$id)->first();
         if ($request['logo']) {
@@ -59,7 +59,7 @@ class GymController extends Controller
 
         return redirect()->back();
     }
-    public function update_time(Request $request ,$gymname, $id)
+    public function update_time(Request $request , $id)
     {  
         $gym = gym_work_time::where([
             ['gym_id', '=', $id],

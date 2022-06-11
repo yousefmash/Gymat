@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\collect_amountRequest;
+use App\Http\Requests\store_contractRequest;
+use App\Http\Requests\User_SearchRequest;
+use App\Http\Requests\store_receiptRequest;
+use App\Http\Requests\update_receiptRequest;
 use App\Models\contract;
 use App\Models\food_table;
 use App\Models\GYM;
@@ -12,7 +17,7 @@ use App\Models\Package;
 use App\Models\user_wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Cookie;
 
 class FinancialController extends Controller
 {
@@ -44,12 +49,12 @@ class FinancialController extends Controller
                 }
                 }
                 $total['sum'] += $total['sum_deposit']+$total['sum_withdraw'];
-                return view('financial.dashboard')->with($arr)->with("gym_name", $gymname)->with("total", $total);
+                return view('financial.dashboard')->with($arr)->with("total", $total);
 
         }else{return redirect('/login');}
     }
 
-    public function store_receipt($gymname,Request $request)
+    public function store_receipt(store_receiptRequest $request)
     {   
         if (auth::check()) {
             $users_gym_id=Auth::user()->gym_id*10000;
@@ -79,7 +84,7 @@ class FinancialController extends Controller
         
     }
 
-    public function update_receipt($gymname,Request $request,$id)
+    public function update_receipt(update_receiptRequest $request,$id)
     {   
         if (auth::check()){
             $receipt= movement::where('id', $id)->first();
@@ -91,7 +96,7 @@ class FinancialController extends Controller
         return redirect()->back();
     }
 
-    public function collect_amount($gymname,Request $request)
+    public function collect_amount(collect_amountRequest $request)
     {   
         if (auth::check()) {
                 $receipt = new movement();
@@ -105,7 +110,7 @@ class FinancialController extends Controller
             }else{return redirect('/login');}
     }
 
-    public function record_Search($gymname,Request $request)
+    public function record_Search(User_SearchRequest $request)
     {  
         if (auth::check()) {
             if (auth::check()) {
@@ -114,7 +119,7 @@ class FinancialController extends Controller
                 elseif($request['user_type']=='phone'){$user = User::where('phone',$request['user'])->first();}
                 elseif($request['user_type']=='id'){$user = User::where('id',$request['user']+$users_gym_id)->first();}
                 if ($user) {
-                    return redirect($gymname.'/'.'financial-record/'.$user->id);
+                    return redirect(Cookie::get('gym_name').'/'.'financial-record/'.$user->id);
                 }else{return redirect()->back();}
         }else{return redirect('/login');}
     }}
@@ -134,12 +139,12 @@ class FinancialController extends Controller
                     $m->type = 'إيداع';
                 }
                 }
-            return view('financial.record')->with($arr)->with('user',$user)->with("gym_name", $gymname)->with("total", $user_wallet->total);
+            return view('financial.record')->with($arr)->with('user',$user)->with("total", $user_wallet->total);
         }else{return redirect('/login');}
     }
 
     
-    public function contract_Search($gymname,Request $request)
+    public function contract_Search(User_SearchRequest $request)
     {  
         if (auth::check()) {
             if (auth::check()) {
@@ -148,7 +153,7 @@ class FinancialController extends Controller
                 elseif($request['user_type']=='phone'){$user = User::where('phone',$request['user'])->first();}
                 elseif($request['user_type']=='id'){$user = User::where('id',$request['user']+$users_gym_id)->first();}
                 if ($user) {
-                    return redirect($gymname.'/'.'contract/'.$user->id);
+                    return redirect(Cookie::get('gym_name').'/'.'contract/'.$user->id);
                 }else{return redirect()->back();}
         }else{return redirect('/login');}
     }}
@@ -177,11 +182,11 @@ class FinancialController extends Controller
             else{
                 $p->duration=$p->duration.'يوم';
             }}
-            return view('financial.contract')->with($arr)->with('user',$user)->with("packages", $packages)->with("coachs", $coachs)->with("gym_name", $gymname)->with("total", $user_wallet->total);
+            return view('financial.contract')->with($arr)->with('user',$user)->with("packages", $packages)->with("coachs", $coachs)->with("total", $user_wallet->total);
         }else{return redirect('/login');}
     }
 
-    public function store_contract($gymname,$id,Request $request)
+    public function store_contract($id,store_contractRequest $request)
     {
         if (auth::check()) {
             $contract = new contract();
@@ -210,7 +215,7 @@ class FinancialController extends Controller
             $user_wallet->total -=  $total;
             $result =$user_wallet->save();
 
-            return redirect($gymname.'/dashboard');
+            return redirect(Cookie::get('gym_name').'/dashboard');
         }else{return redirect('/login');}
     }
 }

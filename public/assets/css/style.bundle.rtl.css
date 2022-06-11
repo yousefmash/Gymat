@@ -7113,6 +7113,9 @@ textarea.form-control-lg {
 .w-25 {
   width: 25% !important;
 }
+.w-30 {
+  width: 30% !important;
+}
 
 .w-50 {
   width: 50% !important;
@@ -47764,7 +47767,7 @@ body {
     padding-top: 65px;
   }
   .header-fixed.toolbar-fixed .wrapper {
-    padding-top: calc(65px + var(--kt-toolbar-height));
+    padding-top: calc(20px + var(--kt-toolbar-height));
   }
 }
 @media (max-width: 991.98px) {
@@ -47783,7 +47786,7 @@ body {
     padding-top: 55px;
   }
   .header-tablet-and-mobile-fixed.toolbar-tablet-and-mobile-fixed .wrapper {
-    padding-top: calc(55px + var(--kt-toolbar-height-tablet-and-mobile));
+    padding-top: calc(20px + var(--kt-toolbar-height-tablet-and-mobile));
   }
 }
 @media (min-width: 992px) {

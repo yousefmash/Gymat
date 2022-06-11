@@ -2,8 +2,8 @@
 
 @section('breadcrumb')
 <ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( $gym_name."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( $gym_name."/gymat")}}" class="px-3">الصالات الرياضية</a></li>
+	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/gymat")}}" class="px-3">الصالات الرياضية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الصالة الرياضية</li>
 </ol>
 @endsection
@@ -18,7 +18,7 @@
                 <!--begin::Card body-->
                 <div class="card-body">
                     <!--begin::Summary-->
-                    <!--begin::User Info-->
+                    <!--begin::Gym Info-->
                     <div class="d-flex flex-center flex-column py-5">
                         <!--begin::Avatar-->
                         <div class="symbol symbol-100px symbol-circle mb-7">
@@ -36,7 +36,7 @@
                         <div class="mb-9">
                             <!--begin::Badge-->
                             <div class="badge badge-lg badge-light-primary d-inline">
-                                {{ $gym->user_name }}
+                                {{ $gym->Gym_name }}
                             </div>
                             <!--begin::Badge-->
                         </div>
@@ -44,11 +44,11 @@
                         <!--begin::Info-->
                         <!--begin::Info heading-->
                     </div>
-                    <!--end::User Info-->
+                    <!--end::Gym Info-->
                     <!--end::Summary-->
                     <!--begin::Details toggle-->
                     <div class="d-flex flex-stack fs-4 py-3">
-                        <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_user_view_details" role="button" aria-expanded="false" aria-controls="kt_user_view_details">تفاصيل 
+                        <div class="fw-bolder rotate collapsible" data-bs-toggle="collapse" href="#kt_Gym_view_details" role="button" aria-expanded="false" aria-controls="kt_Gym_view_details">تفاصيل 
                         <span class="ms-2 rotate-180">
                             <!--begin::Svg Icon | path: icons/duotune/arrows/arr072.svg-->
                             <span class="svg-icon svg-icon-3">
@@ -62,7 +62,7 @@
                     <!--end::Details toggle-->
                     <div class="separator"></div>
                     <!--begin::Details content-->
-                    <div id="kt_user_view_details" class="collapse">
+                    <div id="kt_Gym_view_details" class="collapse">
                         <div class="pb-5 fs-6">
                             <!--begin::Details item-->
                             <div class="fw-bolder mt-5"> مدير النادي</div>
@@ -109,7 +109,7 @@
                         <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( 'admin/gymat/update/'.$gym->id) }}">
                             @csrf
                             <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed gy-5" id="kt_table_users_login_session">
+                            <table class="table align-middle table-row-dashed gy-5" id="kt_table_Gyms_login_session">
                                 <!--begin::Table body-->
                                 <tbody class="fs-6 fw-bold text-gray-600">
                                     <tr>
@@ -131,10 +131,6 @@
                                                 </select>
                                             </div>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>العنوان</td>
-                                        <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $gym->address }}" name="address" autocomplete="off"></td>
                                     </tr>
                                 </tbody>
                                 <!--end::Table body-->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\food_table;
 use App\Models\GYM;
 use App\Models\User;
@@ -15,7 +16,7 @@ use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
-    public function index($gymname)
+    public function index()
     {   
         if (auth::check()){
             $users_gym_id=Auth::user()->gym_id*10000;
@@ -27,7 +28,7 @@ class UserController extends Controller
             foreach( $arr['user'] as $u){
                 $u->id -= $users_gym_id;
             }
-            return view('users.dashboard')->with($arr)->with("gym_name", $gymname);
+            return view('users.dashboard')->with($arr);
 
         }else{return redirect('/login');}
     }
@@ -37,12 +38,12 @@ class UserController extends Controller
         if (auth::check()) {
             $gym_id = auth::user()->gym_id;
             $packages = Package::where('gym_id',$gym_id)->get();
-            return view('users.add-user')->with("gym_name", $gymname)->with('packages',$packages);
+            return view('users.add-user')->with('packages',$packages);
             }else{return redirect('/login');}
         
     }
 
-    public function store($gymname,Request $request)
+    public function store(UserRequest $request)
     {   
         /*-----------------------begin::get last id to add-----------------------*/
         $users_gym_id=Auth::user()->gym_id*10000;
@@ -82,12 +83,12 @@ class UserController extends Controller
                         ->first();
             $gym_id = auth::user()->gym_id;
             $user_wallet = user_wallet::where('user_id', $user->id)->first();
-            return view('users.edit-user')->with("gym_name", $gymname)->with('user',$user)->with("total", $user_wallet->total);
+            return view('users.edit-user')->with('user',$user)->with("total", $user_wallet->total);
         }else{return redirect('/login');}
 
     }
 
-    public function update(Request $request ,$gymname, $id)
+    public function update(UserRequest $request , $id)
     {  
         $user = user::where('id',$id)->first();
         if ($request['name']) {
@@ -104,17 +105,17 @@ class UserController extends Controller
     }
 
 
-    public function destroy($gymname,$id)
+    public function destroy($id)
     {   
         $id += auth::user()->gym_id*10000;
         $result = user::where('id', $id)->delete();
 
         /*-----------------------begin::delete user wallet-----------------------*/
-        $result = user_wallet::where('uesr_id', $id)->delete();
+        $result = user_wallet::where('user_id', $id)->delete();
         /*-----------------------end::delete user wallet-----------------------*/
 
         /*-----------------------begin::delete user wallet-----------------------*/
-        $result = food_table::where('uesr_id', $id)->delete();
+        $result = food_table::where('user_id', $id)->delete();
         /*-----------------------end::delete user wallet-----------------------*/
 
         return redirect()->back();

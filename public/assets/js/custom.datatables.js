@@ -1,4 +1,4 @@
-$("#users_table").DataTable({
+$(".users_table").DataTable({
     "language": {
       "loadingRecords": "جارٍ التحميل...",
       "lengthMenu": "أظهر _MENU_ ",
