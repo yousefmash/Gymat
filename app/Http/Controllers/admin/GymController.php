@@ -4,9 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\GYM;
+use App\Models\gym_contract;
 use App\Models\gym_work_time;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Storage;
 
 use function PHPSTORM_META\type;
@@ -14,12 +16,10 @@ use function PHPSTORM_META\type;
 class GymController extends Controller
 {
     public function edit($gymname,$id)
-    {   
+    {
         if (auth::check()){
-            $gym= GYM::where('gym.id', $id)
-                        ->leftJoin('gym_packages', 'gym.gym_package_id', '=', 'gym_packages.id')
-                        ->select('gym.*', 'gym_packages.name as package_name')
-                        ->first();
+            $gym = gym_contract::where([['gym_id',$id],['state',1]])->Join('gym', 'gym_contracts.gym_id', '=', 'gym.id')
+            ->Join('gym_packages', 'gym_contracts.package_id', 'gym_packages.id')->select('gym.*', 'gym_packages.name as package_name')->first();
             $gym->logo = env('APP_URL').'/'.'storage/media/gym/'.$gym->logo;
             $men_table = gym_work_time::where([
                 ['gym_id', '=', $id],
@@ -32,22 +32,24 @@ class GymController extends Controller
 
     }
 
-    public function update(Request $request , $id)
-    {  
+    public function update($gymname,Request $request , $id)
+    {
         $gym = GYM::where('id',$id)->first();
         if ($request['logo']) {
             /*  Storage image  */
             $logo = $request->file('logo');
-            $path = 'media/gym/';
+            $path = 'storage/media/gym/';
             $name = time()+rand(1,10000000).'.'.$logo->getClientOriginalExtension();
             Storage::disk('public')->put($path.$name , file_get_contents($logo));
             $status = Storage::disk('public')->exists($path.$name);
-        }
-        if ($status) {
-            $gym->logo = $name;
+            if ($status) {
+                $gym->logo = $name;
+                Cookie::queue('gym_logo', env('APP_URL').'/'.'storage/media/gym/'.$gym->logo, 180);
+            }
         }
         if ($request['name']) {
             $gym->name = $request['name'];
+            Cookie::queue('gym_name', $gym->name, 180);
         }
         if ($request['phone']) {
             $gym->phone = $request['phone'];
@@ -59,7 +61,7 @@ class GymController extends Controller
 
         return redirect()->back();
     }
-    public function update_time(Request $request , $id)
+    public function update_time($gymname,Request $request , $id)
     {  
         $gym = gym_work_time::where([
             ['gym_id', '=', $id],
@@ -85,6 +87,7 @@ class GymController extends Controller
         $fri_l =$request['l_in_time_fri'].'|'.$request['l_out_time_fri'];
         if(!$request['holiday_sat']){
             if(!$request['full_time_sat']){
+                
                 if($sat_f != "|"){$gym->sat_f = $sat_f;}
                 if($sat_l != "|"){$gym->sat_l = $sat_l;}
                 

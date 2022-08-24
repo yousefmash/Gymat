@@ -29,7 +29,7 @@
                             <div class="col-md-3">
                                 <label class="form-label">المشترك:</label>
                                 <i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="" data-bs-original-title="إختر نوع البيانات التي تريد البحث عن المشترك بها" aria-label="إختر نوع البيانات التي تريد البحث عن المشترك بها"></i></td>
-                                <select class="form-select" id ='search_type' name="user_type" data-control="select2" data-placeholder="إختر">
+                                <select class="form-select" id ='search_type' name="user_type" data-placeholder="إختر">
                                     <option value="phone">رقم الهاتف</option>
                                     <option value="name">الإسم</option>
                                     <option value="id">رقم المعرف</option>

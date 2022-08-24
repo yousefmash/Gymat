@@ -1,11 +1,9 @@
 @extends('index')
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
     <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/users")}}" class="px-3">المشتركين</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل المشترك</li>
-</ol>
 @endsection
 
 @section('admin_content')
@@ -87,6 +85,14 @@
                                             </label>
                                         </div></td>
                                     </tr>
+                                    @if ($user->password && $user->job_id != 3)
+                                    <tr>
+                                        <td>كلمة السر</td>
+                                        <td><button type="button" class="btn btn-danger btn-hover-scale me-10 modal-class" data-bs-toggle="modal" data-bs-target="#delete_password_modal">
+                                             حذف كلمة السر
+                                        </button></td>
+                                    </tr>
+                                    @endif
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
@@ -104,4 +110,26 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" tabindex="-1" id="delete_password_modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body d-block justify-content-center">
+				<p class="d-flex justify-content-center"><i class="bi bi-x-circle text-danger fa-6x"></i></p>
+				<label class="form-check-label d-flex justify-content-center fs-2" for="form_checkbox">
+					هل تريد حذف كلمة سر المشترك ؟
+				</label>
+			</div>
+			<div class="modal-footer d-flex justify-content-center">
+				<form action="{{ url(Cookie::get('gym_name').'/user/delete-password/'.$user->id) }}"  method="post">
+					@csrf
+					<input type="submit" class="btn btn-danger" type="submit" value="حذف">
+					<button type="button" class="btn btn-light  ml-3" data-bs-dismiss="modal">إلغاء</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
 @endsection

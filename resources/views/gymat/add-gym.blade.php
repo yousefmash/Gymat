@@ -14,7 +14,7 @@
                 <!--end::Close-->
             </div>
             <!--begin::Form-->
-            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/gymat/store') }}">
+            <form class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL('admin/gymat/store') }}">
                 @csrf
                 <div class="modal-body">
                     <!--begin::Form group-->

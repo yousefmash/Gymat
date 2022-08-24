@@ -63,14 +63,36 @@
             <!--begin::Details content-->
             <div id="kt_user_view_details" class="collapse">
                 <div class="pb-5 fs-6">
+                    @if ($last_session)
+                        <!--begin::Details item-->
+                        <div class="fw-bolder mt-5">أخر حضور</div>
+                        <div class="text-gray-600">{{ $last_session->created_at->format('H:i | Y-m-d')}}</div>
+                        <!--end::Details item-->
+                    @endif
+                        <!--begin::Details item-->
+                        <div class="fw-bolder mt-5">الجنس</div>
+                        <div class="text-gray-600">{{ $user->gender }}</div>
+                        <!--end::Details item-->
+                    @if ($user->weight)
+                        <!--begin::Details item-->
+                        <div class="fw-bolder mt-5">الوزن</div>
+                        <div class="text-gray-600">{{ $user->weight }}</div>
+                        <!--end::Details item-->
+                    @endif
+                    @if ($user->age)
+                        <!--begin::Details item-->
+                        <div class="fw-bolder mt-5">العمر</div>
+                        <div class="text-gray-600">{{ $user->age }}</div>
+                        <!--end::Details item-->
+                    @endif
                     <!--begin::Details item-->
-                    <div class="fw-bolder mt-5">أخر حضور</div>
-                    <div class="text-gray-600">22/2/2050</div>
-                    <!--end::Details item-->
-                    <!--begin::Details item-->
-                    <div class="fw-bolder mt-5">رصيد المحفظة</div>
-                    <div class="text-gray-600">
-                        <a href="#" class="text-gray-600 text-hover-primary">100</a>
+                    <div class="fw-bolder mt-5">الإشتراك</div>
+                    <div class="text-gray-600">                    
+                        @if ($contract)
+                            {{ $contract->package_name }}
+                        @else
+                            غير مشترك
+                        @endif
                     </div>
                     <!--end::Details item-->
                 </div>

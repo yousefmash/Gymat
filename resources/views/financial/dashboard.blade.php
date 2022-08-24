@@ -5,10 +5,8 @@
 @endsection 
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">الحركات المالية</li>
-</ol>
 @endsection
 
 @section('toolbar_button')
@@ -30,15 +28,17 @@
 								<h2>الرصيد الحالي</h2>
 							</div>
 							<!--end::Car Title-->
-							<!--begin::Card toolbar-->
-							<div class="card-toolbar">
-								<a data-bs-toggle="modal" data-bs-target="#collect_amount_modal" class="btn btn-sm btn-light modal-collect">ترحيل الرصيد</a>
-							</div>
-							<!--end::Card toolbar-->
+							@if ($gym_balance>0)
+								<!--begin::Card toolbar-->
+								<div class="card-toolbar">
+									<a data-bs-toggle="modal" data-bs-target="#collect_amount_modal" class="btn btn-sm btn-light modal-collect">ترحيل الرصيد</a>
+								</div>
+								<!--end::Card toolbar-->
+							@endif
 						</div>
 						<!--end::Card header-->
 						<!--begin::Card body-->
-						<div class="card-body pt-0"><h4>{{ $total['sum'] }}</h4></div>
+						<div class="card-body pt-0"><h4>{{ $gym_balance }}</h4></div>
 						<!--end::Card body-->
 					</div>
 					<div class="card card-flush py-4 flex-row-fluid overflow-hidden">
@@ -81,26 +81,28 @@
 						<table id="users_table" class="table table-striped table-row-bordered gy-5 gs-7 border rounded users_table">
 							<thead>
 								<tr class="fw-bold fs-6 text-muted">
-									<th>التاريخ</th>
+									<th class="mw-1px"></th>
 									<th>رقم الإيصال</th>
 									<th>نوع العملية</th>
 									<th>القيمة</th>
 									<th>رقم الإيصال</th>
 									<th class="mw-sm-150px">ملاحظة النظام</th>
 									<th class="mw-sm-150px">ملاحظة المستخدم</th>
+									<th>التاريخ</th>
 									<th>تعديل</th>
 								</tr>
 							</thead>
 							<tbody>
 								@foreach($movements as $m)
 									<tr>
-										<td>{{ $m->updated_at->format('h:i d/m/Y') }}</td>
+										<td></td>
 										<td>{{ $m->receipt_num }}</td>
 										<td>{{ $m->type }}</td>
 										<td>{{ $m->value }}</td>
 										<td>{{ $m->receipt_num }}</td>
 										<td>{{ $m->system_note }}</td>
 										<td>{{ $m->note }}</td>
+										<td>{{ $m->updated_at->format('h:i d/m/Y') }}</td>
 										@if ($m->type != 'ترحيل')
 											<td>
 												<button type="button" data-item="{{$m->id}}" class="btn btn-icon btn-primary  btn-xs modal-update" data-bs-toggle="modal" data-bs-target="#edit_movements_modal">
@@ -124,30 +126,6 @@
 
 </div>
 @include('financial.edit-receipt')
-<div class="modal fade" tabindex="-1" id="collect_amount_modal">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-body d-block justify-content-center">
-				<form action="{{ URL( Cookie::get('gym_name').'/collect-amount') }}" id='collect_amount_form' method="post">
-					@csrf
-					<label class="form-check-label d-flex justify-content-center fs-2" for="form_checkbox">
-						المبلغ المراد تحصيله:
-					</label>
-					<div class="mt-4 mx-20">
-						<input type="text" value="{{ $total['sum'] }}" name="receipt_num" class="form-control mb-2 mb-md-0" placeholder="أدخل رقم الإيصال" />
-					</div>
-					<div class="mt-4 mx-20">
-						<textarea class="form-control form-control-solid rounded-3" name="note" rows="1" placeholder="أضف ملاحظة"></textarea>												</label>
-					</div>
-				</div>
-				<div class="modal-footer d-flex justify-content-center">
-					<input type="submit" class="btn btn-primary" type="submit" value="سحب">
-					<button type="button" class="btn btn-light  ml-3" data-bs-dismiss="modal">إلغاء</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 @endsection
 @section('Javascript')
 <script src="{{ asset("assets/plugins/custom/datatables/datatables.bundle.js")}}"></script>

@@ -18,7 +18,6 @@ class CreateGymTable extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('img');
-            $table->integer('gym_package_id');
             $table->integer('admin_id');
             $table->timestamps();
         });

@@ -1,11 +1,9 @@
 @extends('index')
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/gymat")}}" class="px-3">الصالات الرياضية</a></li>
+	<li class="breadcrumb-item"><a href="{{url("admin/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url("admin/gymat")}}" class="px-3">الصالات الرياضية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الصالة الرياضية</li>
-</ol>
 @endsection
 
 @section('admin_content')
@@ -114,11 +112,11 @@
                                 <tbody class="fs-6 fw-bold text-gray-600">
                                     <tr>
                                         <td>الإسم</td>
-                                        <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $gym->name }}" name="name" autocomplete="off"></td>
+                                        <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $gym->name }}" name="name" autocomplete="off"></td>
                                     </tr>
                                     <tr>
                                         <td>رقم الجوال</td>
-                                        <td><input class="form-control form-control-lg form-control-solid" type="text" placeholder="{{ $gym->phone }}" name="phone" autocomplete="off"></td>
+                                        <td><input class="form-control form-control-lg form-control-solid" type="text" value="{{ $gym->phone }}" name="phone" autocomplete="off"></td>
                                     </tr>
                                     <tr>
                                         <td>الباقة</td>

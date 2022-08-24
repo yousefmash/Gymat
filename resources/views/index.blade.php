@@ -1,22 +1,28 @@
-@php $segment = Request::segment(2); @endphp     
+@php 
+$segment = Request::segment(2); 
+$gym_name =  Cookie::get('gym_name');
+$gym_logo = Cookie::get('gym_logo');
+$user_job = Auth::user()->job_id;
+@endphp     
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" direction="rtl" dir="rtl" style="direction: rtl">
 	<!--begin::Head-->
 	<head><base href="">
-		<title>Gymat</title>
+		<title>{{ $gym_name }}</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta property="og:locale" content="en_US" />
 		<meta property="og:type" content="article" />
 		<meta property="og:site_name" content="Gymat" />
-		<link rel="shortcut icon" href="{{ asset("assets/media/logos/logo-solo.svg") }}" />
+		<link rel="shortcut icon" href="{{ asset($gym_logo) }}" />
 		<!--begin::Fonts-->
-		<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&amp;display=swap" rel="stylesheet">		<!--end::Fonts-->
+		<link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&amp;display=swap" rel="stylesheet">		
+		<!--end::Fonts-->
 		<!--begin::Stylesheets-->
 		@yield('Stylesheets')
 		<!--end::Stylesheets-->
 		<!--begin::Global Stylesheets Bundle(used by all pages)-->
-		<link href="{{ asset("assets/plugins/global/plugins.bundle.css") }}" rel="stylesheet" type="text/css" />
+		<link href="{{ asset("assets/plugins/global/plugins.bundle.rtl.css") }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset("assets/css/style.bundle.rtl.css") }}" rel="stylesheet" type="text/css" />
 		<link href="{{ asset("css/mycss.css") }}" rel="stylesheet" type="text/css" />
 		<!--end::Global Stylesheets Bundle-->
@@ -53,8 +59,8 @@
 						</div>
 						<!--end::Aside toggler-->			
 						<!--begin::Logo-->
-						<a href="?page=index">
-							<img alt="Logo" src="{{ asset("assets/media/logos/logo.png")}}" class="h-40px logo" />
+						<a href="{{url( $gym_name."/dashboard")}}">
+							<img alt="Logo" src="{{ asset($gym_logo)}}" class="h-40px logo" />
 						</a>
 						<!--end::Logo-->
 					</div>
@@ -65,7 +71,7 @@
 						<!--begin::Menu-->
 						<div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true" data-kt-menu-expand="false">
 							<div class="menu-item">
-								<a class="menu-link @if ($segment == "dashboard") active @endif " href="{{url( Cookie::get('gym_name')."/dashboard")}}">
+								<a class="menu-link @if ($segment == "dashboard") active @endif " href="{{url( $gym_name."/dashboard")}}">
 									<span class="menu-icon">
 										<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
 										<span class="svg-icon svg-icon-2">
@@ -79,233 +85,244 @@
 									<span class="menu-title">الرئيسية</span>
 								</a>
 							</div>
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "gymat") active @endif" href="{{url("admin/gymat")}}">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-										<span class="svg-icon svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<path d="M14 18V16H10V18L9 20H15L14 18Z" fill="black"/>
-												<path opacity="0.3" d="M20 4H17V3C17 2.4 16.6 2 16 2H8C7.4 2 7 2.4 7 3V4H4C3.4 4 3 4.4 3 5V9C3 11.2 4.8 13 7 13C8.2 14.2 8.8 14.8 10 16H14C15.2 14.8 15.8 14.2 17 13C19.2 13 21 11.2 21 9V5C21 4.4 20.6 4 20 4ZM5 9V6H7V11C5.9 11 5 10.1 5 9ZM19 9C19 10.1 18.1 11 17 11V6H19V9ZM17 21V22H7V21C7 20.4 7.4 20 8 20H16C16.6 20 17 20.4 17 21ZM10 9C9.4 9 9 8.6 9 8V5C9 4.4 9.4 4 10 4C10.6 4 11 4.4 11 5V8C11 8.6 10.6 9 10 9ZM10 13C9.4 13 9 12.6 9 12V11C9 10.4 9.4 10 10 10C10.6 10 11 10.4 11 11V12C11 12.6 10.6 13 10 13Z" fill="black"/>
-											</svg>
-										</span>
-										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">الصالات الرباضية</span>
-								</a>
-							</div>
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "gym-package") active @endif" href="{{url( "admin/gym-package")}}">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-										<span class="svg-icon svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"/>
-												<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"/>
-												<rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"/>
-												<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"/>
-											</svg>
-										</span>
-										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">باقات الصالات الرباضية</span>
-								</a>
-							</div>
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "gym") active @endif" href="{{url( Cookie::get('gym_name')."/gym/edit/".Auth::user()->gym_id)}}">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-										<span class="svg-icon svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<path d="M14 18V16H10V18L9 20H15L14 18Z" fill="black"/>
-												<path opacity="0.3" d="M20 4H17V3C17 2.4 16.6 2 16 2H8C7.4 2 7 2.4 7 3V4H4C3.4 4 3 4.4 3 5V9C3 11.2 4.8 13 7 13C8.2 14.2 8.8 14.8 10 16H14C15.2 14.8 15.8 14.2 17 13C19.2 13 21 11.2 21 9V5C21 4.4 20.6 4 20 4ZM5 9V6H7V11C5.9 11 5 10.1 5 9ZM19 9C19 10.1 18.1 11 17 11V6H19V9ZM17 21V22H7V21C7 20.4 7.4 20 8 20H16C16.6 20 17 20.4 17 21ZM10 9C9.4 9 9 8.6 9 8V5C9 4.4 9.4 4 10 4C10.6 4 11 4.4 11 5V8C11 8.6 10.6 9 10 9ZM10 13C9.4 13 9 12.6 9 12V11C9 10.4 9.4 10 10 10C10.6 10 11 10.4 11 11V12C11 12.6 10.6 13 10 13Z" fill="black"/>
-											</svg>
-										</span>
-										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">الصالة الرياضية</span>
-								</a>
-							</div>
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "users" or $segment == "user" ) active @endif" href="{{url( Cookie::get('gym_name')."/users")}}">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-										<span class="svg-icon svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z" fill="black"/>
-												<rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="black"/>
-												<path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z" fill="black"/>
-												<rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="black"/>
+							@if ($user_job == 2)
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "gymat") active @endif" href="{{url("admin/gymat")}}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M14 18V16H10V18L9 20H15L14 18Z" fill="black"/>
+													<path opacity="0.3" d="M20 4H17V3C17 2.4 16.6 2 16 2H8C7.4 2 7 2.4 7 3V4H4C3.4 4 3 4.4 3 5V9C3 11.2 4.8 13 7 13C8.2 14.2 8.8 14.8 10 16H14C15.2 14.8 15.8 14.2 17 13C19.2 13 21 11.2 21 9V5C21 4.4 20.6 4 20 4ZM5 9V6H7V11C5.9 11 5 10.1 5 9ZM19 9C19 10.1 18.1 11 17 11V6H19V9ZM17 21V22H7V21C7 20.4 7.4 20 8 20H16C16.6 20 17 20.4 17 21ZM10 9C9.4 9 9 8.6 9 8V5C9 4.4 9.4 4 10 4C10.6 4 11 4.4 11 5V8C11 8.6 10.6 9 10 9ZM10 13C9.4 13 9 12.6 9 12V11C9 10.4 9.4 10 10 10C10.6 10 11 10.4 11 11V12C11 12.6 10.6 13 10 13Z" fill="black"/>
 												</svg>
-										</span>
-										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">المشتركين</span>
-								</a>
-							</div>	
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "packages") active @endif" href="{{url( Cookie::get('gym_name')."/packages")}}">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
-										<span class="svg-icon svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<rect opacity="0.3" x="2" y="2" width="9" height="9" rx="2" fill="currentColor"/>
-												<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"/>
-												<rect x="13" y="13" width="9" height="9" rx="2" fill="currentColor"/>
-												<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"/>
-											</svg>
-										</span>
-										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">باقات المشتركين</span>
-								</a>
-							</div>
-							<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if ($segment == "movements" || $segment == "financial-record"  ) here show @endif">
-								<span class="menu-link @if ($segment == "movements" ||$segment == "add-receipt"  ) active @endif">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: assets/media/icons/duotune/finance/fin003.svg-->
-										<span class="svg-icon svg-icon-muted svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-											<path opacity="0.3" d="M20 18H4C3.4 18 3 17.6 3 17V7C3 6.4 3.4 6 4 6H20C20.6 6 21 6.4 21 7V17C21 17.6 20.6 18 20 18ZM12 8C10.3 8 9 9.8 9 12C9 14.2 10.3 16 12 16C13.7 16 15 14.2 15 12C15 9.8 13.7 8 12 8Z" fill="currentColor"/>
-											<path d="M18 6H20C20.6 6 21 6.4 21 7V9C19.3 9 18 7.7 18 6ZM6 6H4C3.4 6 3 6.4 3 7V9C4.7 9 6 7.7 6 6ZM21 17V15C19.3 15 18 16.3 18 18H20C20.6 18 21 17.6 21 17ZM3 15V17C3 17.6 3.4 18 4 18H6C6 16.3 4.7 15 3 15Z" fill="currentColor"/>
-											</svg>
-										</span>
-										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">الحركات المالية</span>
-									<span class="menu-arrow"></span>
-								</span>
-								<div class="menu-sub menu-sub-accordion">
-									<div class="menu-item">
-										<a class="menu-link @if ($segment == "movements") active @endif" href="{{url( Cookie::get('gym_name')."/movements")}}">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
 											</span>
-											<span class="menu-title">الحركات المالية</span>
-										</a>
-									</div>
-									<div class="menu-item">
-										<a class="menu-link @if ($segment == "financial-record") active @endif" data-bs-toggle="modal" data-bs-target="#Search-record">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">الصالات الرباضية</span>
+									</a>
+								</div>
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "gym-package") active @endif" href="{{url( "admin/gym-package")}}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect x="2" y="2" width="9" height="9" rx="2" fill="currentColor"/>
+													<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"/>
+													<rect opacity="0.3" x="13" y="13" width="9" height="9" rx="2" fill="currentColor"/>
+													<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"/>
+												</svg>
 											</span>
-											<span class="menu-title">السجل المالي للمشترك</span>
-										</a>
-									</div>
-									<div class="menu-item">
-										<a class="menu-link @if ($segment == "add-receipt") active @endif" data-bs-toggle="modal" data-bs-target="#receipt">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">باقات الصالات الرباضية</span>
+									</a>
+								</div>
+							@endif
+							@if ($user_job == 3)
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "gym") active @endif" href="{{url( $gym_name."/gym/edit/".Auth::user()->gym_id)}}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M14 18V16H10V18L9 20H15L14 18Z" fill="black"/>
+													<path opacity="0.3" d="M20 4H17V3C17 2.4 16.6 2 16 2H8C7.4 2 7 2.4 7 3V4H4C3.4 4 3 4.4 3 5V9C3 11.2 4.8 13 7 13C8.2 14.2 8.8 14.8 10 16H14C15.2 14.8 15.8 14.2 17 13C19.2 13 21 11.2 21 9V5C21 4.4 20.6 4 20 4ZM5 9V6H7V11C5.9 11 5 10.1 5 9ZM19 9C19 10.1 18.1 11 17 11V6H19V9ZM17 21V22H7V21C7 20.4 7.4 20 8 20H16C16.6 20 17 20.4 17 21ZM10 9C9.4 9 9 8.6 9 8V5C9 4.4 9.4 4 10 4C10.6 4 11 4.4 11 5V8C11 8.6 10.6 9 10 9ZM10 13C9.4 13 9 12.6 9 12V11C9 10.4 9.4 10 10 10C10.6 10 11 10.4 11 11V12C11 12.6 10.6 13 10 13Z" fill="black"/>
+												</svg>
 											</span>
-											<span class="menu-title">إضافة إيصال</span>
-										</a>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">الصالة الرياضية</span>
+									</a>
+								</div>
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "packages") active @endif" href="{{url( $gym_name."/packages")}}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<rect opacity="0.3" x="2" y="2" width="9" height="9" rx="2" fill="currentColor"/>
+													<rect opacity="0.3" x="13" y="2" width="9" height="9" rx="2" fill="currentColor"/>
+													<rect x="13" y="13" width="9" height="9" rx="2" fill="currentColor"/>
+													<rect opacity="0.3" x="2" y="13" width="9" height="9" rx="2" fill="currentColor"/>
+												</svg>
+											</span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">باقات المشتركين</span>
+									</a>
+								</div>
+							@endif
+							@if ($user_job == 3||$user_job == 4)
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "users" or $segment == "user" ) active @endif" href="{{url( $gym_name."/users")}}">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: icons/duotune/general/gen014.svg-->
+											<span class="svg-icon svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M16.0173 9H15.3945C14.2833 9 13.263 9.61425 12.7431 10.5963L12.154 11.7091C12.0645 11.8781 12.1072 12.0868 12.2559 12.2071L12.6402 12.5183C13.2631 13.0225 13.7556 13.6691 14.0764 14.4035L14.2321 14.7601C14.2957 14.9058 14.4396 15 14.5987 15H18.6747C19.7297 15 20.4057 13.8774 19.912 12.945L18.6686 10.5963C18.1487 9.61425 17.1285 9 16.0173 9Z" fill="black"/>
+													<rect opacity="0.3" x="14" y="4" width="4" height="4" rx="2" fill="black"/>
+													<path d="M4.65486 14.8559C5.40389 13.1224 7.11161 12 9 12C10.8884 12 12.5961 13.1224 13.3451 14.8559L14.793 18.2067C15.3636 19.5271 14.3955 21 12.9571 21H5.04292C3.60453 21 2.63644 19.5271 3.20698 18.2067L4.65486 14.8559Z" fill="black"/>
+													<rect opacity="0.3" x="6" y="5" width="6" height="6" rx="3" fill="black"/>
+													</svg>
+											</span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">المشتركين</span>
+									</a>
+								</div>	
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if ($segment == "movements" || $segment == "financial-record"  ) here show @endif">
+									<span class="menu-link @if ($segment == "movements" ||$segment == "add-receipt"  ) active @endif">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: assets/media/icons/duotune/finance/fin003.svg-->
+											<span class="svg-icon svg-icon-muted svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+												<path opacity="0.3" d="M20 18H4C3.4 18 3 17.6 3 17V7C3 6.4 3.4 6 4 6H20C20.6 6 21 6.4 21 7V17C21 17.6 20.6 18 20 18ZM12 8C10.3 8 9 9.8 9 12C9 14.2 10.3 16 12 16C13.7 16 15 14.2 15 12C15 9.8 13.7 8 12 8Z" fill="currentColor"/>
+												<path d="M18 6H20C20.6 6 21 6.4 21 7V9C19.3 9 18 7.7 18 6ZM6 6H4C3.4 6 3 6.4 3 7V9C4.7 9 6 7.7 6 6ZM21 17V15C19.3 15 18 16.3 18 18H20C20.6 18 21 17.6 21 17ZM3 15V17C3 17.6 3.4 18 4 18H6C6 16.3 4.7 15 3 15Z" fill="currentColor"/>
+												</svg>
+											</span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">الحركات المالية</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<div class="menu-sub menu-sub-accordion">
+										<div class="menu-item">
+											<a class="menu-link @if ($segment == "movements") active @endif" href="{{url( $gym_name."/movements")}}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">الحركات المالية</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link @if ($segment == "financial-record") active @endif" data-bs-toggle="modal" data-bs-target="#Search-record">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">السجل المالي للمشترك</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link @if ($segment == "add-receipt") active @endif" data-bs-toggle="modal" data-bs-target="#receipt">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">إضافة إيصال</span>
+											</a>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if ($segment == "sessions") here show @endif">
-								<span class="menu-link @if ($segment == "sessions") active @endif">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: assets/media/icons/duotune/finance/fin003.svg-->
-										<span class="svg-icon svg-icon-muted svg-icon-2">
-											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<path opacity="0.3" d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z" fill="currentColor"/>
-												<path d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z" fill="currentColor"/>
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if ($segment == "sessions") here show @endif">
+									<span class="menu-link @if ($segment == "sessions") active @endif">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: assets/media/icons/duotune/finance/fin003.svg-->
+											<span class="svg-icon svg-icon-muted svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path opacity="0.3" d="M21 10.7192H3C2.4 10.7192 2 11.1192 2 11.7192C2 12.3192 2.4 12.7192 3 12.7192H6V14.7192C6 18.0192 8.7 20.7192 12 20.7192C15.3 20.7192 18 18.0192 18 14.7192V12.7192H21C21.6 12.7192 22 12.3192 22 11.7192C22 11.1192 21.6 10.7192 21 10.7192Z" fill="currentColor"/>
+													<path d="M11.6 21.9192C11.4 21.9192 11.2 21.8192 11 21.7192C10.6 21.4192 10.5 20.7191 10.8 20.3191C11.7 19.1191 12.3 17.8191 12.7 16.3191C12.8 15.8191 13.4 15.4192 13.9 15.6192C14.4 15.7192 14.8 16.3191 14.6 16.8191C14.2 18.5191 13.4 20.1192 12.4 21.5192C12.2 21.7192 11.9 21.9192 11.6 21.9192ZM8.7 19.7192C10.2 18.1192 11 15.9192 11 13.7192V8.71917C11 8.11917 11.4 7.71917 12 7.71917C12.6 7.71917 13 8.11917 13 8.71917V13.0192C13 13.6192 13.4 14.0192 14 14.0192C14.6 14.0192 15 13.6192 15 13.0192V8.71917C15 7.01917 13.7 5.71917 12 5.71917C10.3 5.71917 9 7.01917 9 8.71917V13.7192C9 15.4192 8.4 17.1191 7.2 18.3191C6.8 18.7191 6.9 19.3192 7.3 19.7192C7.5 19.9192 7.7 20.0192 8 20.0192C8.3 20.0192 8.5 19.9192 8.7 19.7192ZM6 16.7192C6.5 16.7192 7 16.2192 7 15.7192V8.71917C7 8.11917 7.1 7.51918 7.3 6.91918C7.5 6.41918 7.2 5.8192 6.7 5.6192C6.2 5.4192 5.59999 5.71917 5.39999 6.21917C5.09999 7.01917 5 7.81917 5 8.71917V15.7192V15.8191C5 16.3191 5.5 16.7192 6 16.7192ZM9 4.71917C9.5 4.31917 10.1 4.11918 10.7 3.91918C11.2 3.81918 11.5 3.21917 11.4 2.71917C11.3 2.21917 10.7 1.91916 10.2 2.01916C9.4 2.21916 8.59999 2.6192 7.89999 3.1192C7.49999 3.4192 7.4 4.11916 7.7 4.51916C7.9 4.81916 8.2 4.91918 8.5 4.91918C8.6 4.91918 8.8 4.81917 9 4.71917ZM18.2 18.9192C18.7 17.2192 19 15.5192 19 13.7192V8.71917C19 5.71917 17.1 3.1192 14.3 2.1192C13.8 1.9192 13.2 2.21917 13 2.71917C12.8 3.21917 13.1 3.81916 13.6 4.01916C15.6 4.71916 17 6.61917 17 8.71917V13.7192C17 15.3192 16.8 16.8191 16.3 18.3191C16.1 18.8191 16.4 19.4192 16.9 19.6192C17 19.6192 17.1 19.6192 17.2 19.6192C17.7 19.6192 18 19.3192 18.2 18.9192Z" fill="currentColor"/>
+												</svg>
+											</span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">حركات المشتركين</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<div class="menu-sub menu-sub-accordion">
+										<div class="menu-item">
+											<a class="menu-link @if ($segment == "sessions") active @endif" href="{{url( $gym_name."/sessions")}}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">حركات المشتركين</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" data-bs-toggle="modal" data-bs-target="#Search-arrival">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">حضور المشترك</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" data-bs-toggle="modal" data-bs-target="#Search-leave">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">إنصراف المشترك</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "contract") active @endif" data-bs-toggle="modal" data-bs-target="#Search-contract">
+										<span class="menu-icon">
+										<!--begin::Svg Icon | path: assets/media/icons/duotune/ecommerce/ecm008.svg-->
+										<span class="svg-icon svg-icon-muted svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+											<path opacity="0.3" d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z" fill="currentColor"/>
+											<path d="M12 12.6H11C10.4 12.6 10 12.2 10 11.6C10 11 10.4 10.6 11 10.6H12C12.6 10.6 13 11 13 11.6C13 12.2 12.6 12.6 12 12.6ZM9 11.6C9 11 8.6 10.6 8 10.6H6C5.4 10.6 5 11 5 11.6C5 12.2 5.4 12.6 6 12.6H8C8.6 12.6 9 12.2 9 11.6ZM9 7.59998C9 6.99998 8.6 6.59998 8 6.59998H6C5.4 6.59998 5 6.99998 5 7.59998C5 8.19998 5.4 8.59998 6 8.59998H8C8.6 8.59998 9 8.19998 9 7.59998ZM13 7.59998C13 6.99998 12.6 6.59998 12 6.59998H11C10.4 6.59998 10 6.99998 10 7.59998C10 8.19998 10.4 8.59998 11 8.59998H12C12.6 8.59998 13 8.19998 13 7.59998ZM13 15.6C13 15 12.6 14.6 12 14.6H10C9.4 14.6 9 15 9 15.6C9 16.2 9.4 16.6 10 16.6H12C12.6 16.6 13 16.2 13 15.6Z" fill="currentColor"/>
+											<path d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z" fill="currentColor"/>
 											</svg>
 										</span>
 										<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">تسجيل إشتراك</span>
+									</a>
+								</div>	
+							@endif
+							@if ($user_job == 3||$user_job == 5)
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if ($segment == "diet" ) here show @endif">
+									<span class="menu-link @if ($segment == "diet") active @endif">
+										<span class="menu-icon">
+											<!--begin::Svg Icon | path: assets/media/icons/duotune/finance/fin003.svg-->
+											<span class="svg-icon svg-icon-muted svg-icon-2">
+												<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+													<path d="M18.3721 4.65439C17.6415 4.23815 16.8052 4 15.9142 4C14.3444 4 12.9339 4.73924 12.003 5.89633C11.0657 4.73913 9.66 4 8.08626 4C7.19611 4 6.35789 4.23746 5.62804 4.65439C4.06148 5.54462 3 7.26056 3 9.24232C3 9.81001 3.08941 10.3491 3.25153 10.8593C4.12155 14.9013 9.69287 20 12.0034 20C14.2502 20 19.875 14.9013 20.7488 10.8593C20.9109 10.3491 21 9.81001 21 9.24232C21.0007 7.26056 19.9383 5.54462 18.3721 4.65439Z" fill="currentColor"/>
+												</svg>
+											</span>
+											<!--end::Svg Icon-->
+										</span>
+										<span class="menu-title">النظام الغذائي</span>
+										<span class="menu-arrow"></span>
 									</span>
-									<span class="menu-title">حركات المشتركين</span>
-									<span class="menu-arrow"></span>
-								</span>
-								<div class="menu-sub menu-sub-accordion">
-									<div class="menu-item">
-										<a class="menu-link @if ($segment == "sessions") active @endif" href="{{url( Cookie::get('gym_name')."/sessions")}}">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">حركات المشتركين</span>
-										</a>
-									</div>
-									<div class="menu-item">
-										<a class="menu-link" data-bs-toggle="modal" data-bs-target="#Search-arrival">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">حضور المشترك</span>
-										</a>
-									</div>
-									<div class="menu-item">
-										<a class="menu-link" data-bs-toggle="modal" data-bs-target="#Search-leave">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">إنصراف المشترك</span>
-										</a>
+									<div class="menu-sub menu-sub-accordion">
+										<div class="menu-item">
+											<a class="menu-link @if (str_starts_with(Request::segment(3),"meal")) active @endif" href="{{url( $gym_name."/diet/meals")}}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">الوجبات</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link @if (str_starts_with(Request::segment(3),"food-table")) active @endif" href="{{url( $gym_name."/diet/food-tables")}}">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">طلبات المستخدمين</span>
+											</a>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "contract") active @endif" data-bs-toggle="modal" data-bs-target="#Search-contract">
-									<span class="menu-icon">
-									<!--begin::Svg Icon | path: assets/media/icons/duotune/ecommerce/ecm008.svg-->
-									<span class="svg-icon svg-icon-muted svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<path opacity="0.3" d="M18 21.6C16.3 21.6 15 20.3 15 18.6V2.50001C15 2.20001 14.6 1.99996 14.3 2.19996L13 3.59999L11.7 2.3C11.3 1.9 10.7 1.9 10.3 2.3L9 3.59999L7.70001 2.3C7.30001 1.9 6.69999 1.9 6.29999 2.3L5 3.59999L3.70001 2.3C3.50001 2.1 3 2.20001 3 3.50001V18.6C3 20.3 4.3 21.6 6 21.6H18Z" fill="currentColor"/>
-										<path d="M12 12.6H11C10.4 12.6 10 12.2 10 11.6C10 11 10.4 10.6 11 10.6H12C12.6 10.6 13 11 13 11.6C13 12.2 12.6 12.6 12 12.6ZM9 11.6C9 11 8.6 10.6 8 10.6H6C5.4 10.6 5 11 5 11.6C5 12.2 5.4 12.6 6 12.6H8C8.6 12.6 9 12.2 9 11.6ZM9 7.59998C9 6.99998 8.6 6.59998 8 6.59998H6C5.4 6.59998 5 6.99998 5 7.59998C5 8.19998 5.4 8.59998 6 8.59998H8C8.6 8.59998 9 8.19998 9 7.59998ZM13 7.59998C13 6.99998 12.6 6.59998 12 6.59998H11C10.4 6.59998 10 6.99998 10 7.59998C10 8.19998 10.4 8.59998 11 8.59998H12C12.6 8.59998 13 8.19998 13 7.59998ZM13 15.6C13 15 12.6 14.6 12 14.6H10C9.4 14.6 9 15 9 15.6C9 16.2 9.4 16.6 10 16.6H12C12.6 16.6 13 16.2 13 15.6Z" fill="currentColor"/>
-										<path d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z" fill="currentColor"/>
-										</svg>
-									</span>
-									<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">تسجيل إشتراك</span>
-								</a>
-							</div>	
-							<div data-kt-menu-trigger="click" class="menu-item menu-accordion @if ($segment == "diet" ) here show @endif">
-								<span class="menu-link @if ($segment == "diet") active @endif">
-									<span class="menu-icon">
-										<!--begin::Svg Icon | path: assets/media/icons/duotune/finance/fin003.svg-->
+							@endif
+							@if ($user_job == 3||$user_job == 4)
+								<div class="menu-item">
+									<a class="menu-link @if ($segment == "notices") active @endif"  href="{{url( $gym_name."/notices")}}">
+										<span class="menu-icon">
+										<!--begin::Svg Icon | path: assets/media/icons/duotune/ecommerce/ecm008.svg-->
 										<span class="svg-icon svg-icon-muted svg-icon-2">
 											<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-												<path d="M18.3721 4.65439C17.6415 4.23815 16.8052 4 15.9142 4C14.3444 4 12.9339 4.73924 12.003 5.89633C11.0657 4.73913 9.66 4 8.08626 4C7.19611 4 6.35789 4.23746 5.62804 4.65439C4.06148 5.54462 3 7.26056 3 9.24232C3 9.81001 3.08941 10.3491 3.25153 10.8593C4.12155 14.9013 9.69287 20 12.0034 20C14.2502 20 19.875 14.9013 20.7488 10.8593C20.9109 10.3491 21 9.81001 21 9.24232C21.0007 7.26056 19.9383 5.54462 18.3721 4.65439Z" fill="currentColor"/>
+												<path opacity="0.3" d="M12 22C13.6569 22 15 20.6569 15 19C15 17.3431 13.6569 16 12 16C10.3431 16 9 17.3431 9 19C9 20.6569 10.3431 22 12 22Z" fill="currentColor"/>
+												<path d="M19 15V18C19 18.6 18.6 19 18 19H6C5.4 19 5 18.6 5 18V15C6.1 15 7 14.1 7 13V10C7 7.6 8.7 5.6 11 5.1V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V5.1C15.3 5.6 17 7.6 17 10V13C17 14.1 17.9 15 19 15ZM11 10C11 9.4 11.4 9 12 9C12.6 9 13 8.6 13 8C13 7.4 12.6 7 12 7C10.3 7 9 8.3 9 10C9 10.6 9.4 11 10 11C10.6 11 11 10.6 11 10Z" fill="currentColor"/>
 											</svg>
 										</span>
 										<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">النظام الغذائي</span>
-									<span class="menu-arrow"></span>
-								</span>
-								<div class="menu-sub menu-sub-accordion">
-									<div class="menu-item">
-										<a class="menu-link @if (str_starts_with(Request::segment(3),"meal")) active @endif" href="{{url( Cookie::get('gym_name')."/diet/meals")}}">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">الوجبات</span>
-										</a>
-									</div>
-									<div class="menu-item">
-										<a class="menu-link @if (str_starts_with(Request::segment(3),"food-table")) active @endif" href="{{url( Cookie::get('gym_name')."/diet/food-tables")}}">
-											<span class="menu-bullet">
-												<span class="bullet bullet-dot"></span>
-											</span>
-											<span class="menu-title">طلبات المستخدمين</span>
-										</a>
-									</div>
+										</span>
+										<span class="menu-title">الإشعارات</span>
+									</a>
 								</div>
-							</div>
-							<div class="menu-item">
-								<a class="menu-link @if ($segment == "notices") active @endif"  href="{{url( Cookie::get('gym_name')."/notices")}}">
-									<span class="menu-icon">
-									<!--begin::Svg Icon | path: assets/media/icons/duotune/ecommerce/ecm008.svg-->
-									<span class="svg-icon svg-icon-muted svg-icon-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-										<path opacity="0.3" d="M12 22C13.6569 22 15 20.6569 15 19C15 17.3431 13.6569 16 12 16C10.3431 16 9 17.3431 9 19C9 20.6569 10.3431 22 12 22Z" fill="currentColor"/>
-										<path d="M19 15V18C19 18.6 18.6 19 18 19H6C5.4 19 5 18.6 5 18V15C6.1 15 7 14.1 7 13V10C7 7.6 8.7 5.6 11 5.1V3C11 2.4 11.4 2 12 2C12.6 2 13 2.4 13 3V5.1C15.3 5.6 17 7.6 17 10V13C17 14.1 17.9 15 19 15ZM11 10C11 9.4 11.4 9 12 9C12.6 9 13 8.6 13 8C13 7.4 12.6 7 12 7C10.3 7 9 8.3 9 10C9 10.6 9.4 11 10 11C10.6 11 11 10.6 11 10Z" fill="currentColor"/>
-									</svg>
-									</span>
-									<!--end::Svg Icon-->
-									</span>
-									<span class="menu-title">الإشعارات</span>
-								</a>
-							</div>
+							@endif
 						</div>	
 						<div class="menu-item">
 							<div class="menu-content">
@@ -341,19 +358,20 @@
 						<!--end::Aside mobile toggle-->
 						<!--begin::Mobile logo-->
 						<div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-							<a href="?page=index" class="d-lg-none">
-								<img alt="Logo" src="{{ asset("assets/media/logos/logo.svg")}}" class="h-30px" />
+							<a href="{{url( $gym_name."/dashboard")}}" class="d-lg-none">
+								<img alt="Logo" src="{{ asset($gym_logo)}}" class="h-30px" />
 							</a>
 						</div>
 						<!--end::Mobile logo-->
 						<!--begin::Wrapper-->
 						<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
 							<!--begin::Navbar-->
-							@yield('breadcrumb')
+							<ol class="breadcrumb text-muted fs-6 fw-bold">
+								@yield('breadcrumb')
+							</ol>
 							<div class="d-flex align-items-stretch" id="kt_header_nav">
 								<!--begin::Toolbar wrapper-->
 								<div class="d-flex align-items-stretch flex-shrink-0">
-
 									<!--begin::Activities-->
 									<div class="d-flex align-items-center ms-1 ms-lg-6">
 										<!--begin::Drawer toggle-->
@@ -381,9 +399,6 @@
 											</span>
 											<!--end::Svg Icon-->
 										</div>
-
-											<!--layout-partial:layout/menus/_notifications-menu.html-->
-
 										<!--end::Menu wrapper-->
 									</div>
 									<!--end::Notifications-->
@@ -421,7 +436,6 @@
 					<div class="post d-flex flex-column-fluid" id="kt_post">
 						<!--layout-partial:layout/_content.html-->
 						@yield('admin_content')
-
 					</div>
 				<!--end::Post-->
 				</div>
@@ -458,11 +472,13 @@
 		</div>
 		<!--end::Page-->
 	</div>
+@include('users.add-user',['button'=> false])
 @include('financial.add-receipt',['button'=> false])
 @include('financial.user-search',['url'=>'record-search','id'=>'record','header'=>'بحث عن مشترك'])
 @include('financial.user-search',['url'=>'contract-search','id'=>'contract','header'=>'بحث عن مشترك'])
 @include('financial.user-search',['url'=>'arrival-search','id'=>'arrival','header'=>'تسجل حضور المشترك'])
 @include('financial.user-search',['url'=>'leave-search','id'=>'leave','header'=>'تسجيل إنصراف المشترك'])
+@include('notices.add-notice')
 @include('dashboard.error_alert')
 	<!--end::Root-->
 	<!--end::Main-->
@@ -481,7 +497,7 @@
 		@if ($errors->any())
 			<script>
 				$(document).ready(function(){
-					$("#myModal").modal('show');
+					$("#Error-Modal").modal('show');
 				});
 			</script>
 		@endif

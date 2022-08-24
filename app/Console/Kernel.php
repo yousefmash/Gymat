@@ -26,9 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         #$schedule->command('inspire')->hourly();
-        $schedule->call(function () {
-            Notice::where('id',1)->delete();
-        })->everyMinute();
+        $schedule->call('Sessions')->everyMinute();
     }
 
     /**

@@ -20,18 +20,10 @@
 											<!--end::Menu separator-->
 											<!--begin::Menu item-->
 											<div class="menu-item px-5">
-												<a href="?page=account/overview" class="menu-link px-5">My Profile</a>
-											</div>
-											<!--end::Menu item-->
-											<!--begin::Menu separator-->
-											<div class="separator my-2"></div>
-											<!--end::Menu separator-->
-											<!--begin::Menu item-->
-											<div class="menu-item px-5">
 												<a href="{{ route('logout') }}" 
 												onclick="event.preventDefault();
 												document.getElementById('logout-form').submit();" 
-												class="menu-link px-5">Sign Out</a>
+												class="menu-link px-5 fw-bolder d-flex align-items-center fs-6">تسجيل الخروج</a>
 												<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
 													@csrf
 												</form>

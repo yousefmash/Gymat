@@ -5,10 +5,8 @@
 @endsection
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( "admin/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">باقات الصالات الرياضية</li>
-</ol>
 @endsection
 
 @section('admin_content')
@@ -36,7 +34,7 @@
 						<!--begin::details-->
 						<div class="d-flex flex-column text-gray-600">
 							<div class="d-flex align-items-center py-2">
-							<span class="bullet bg-primary me-3"></span>عدد المشتريكن : {{ $p->workout_days }}</div>
+							<span class="bullet bg-primary me-3"></span>عدد المشتريكن : {{ $p->users_number }}</div>
 							<div class="d-flex align-items-center py-2">
 							<span class="bullet bg-primary me-3"></span>مدة الإشتراك : {{ $p->duration  }}</div>
 							<div class="d-flex align-items-center py-2">

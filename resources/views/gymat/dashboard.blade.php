@@ -5,10 +5,8 @@
 @endsection
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
+	<li class="breadcrumb-item"><a href="{{url("admin/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">الصالات الرياضية</li>
-</ol>
 @endsection
 
 @section('admin_content')
@@ -53,11 +51,7 @@
 							</td>
 							<td>{{ $g->name }}</td>
 							<td>{{ $g->phone }}</td>
-							<td>@foreach ($gym_packages as $g_p)
-								@if ($g_p->id == $g->gym_package_id)
-									{{ $g_p->name }}
-								@endif
-							@endforeach</td>
+							<td></td>
 							<td>
 								<a href="{{url('admin/gymat/edit/'.$g->id)}}" class="btn btn-icon btn-primary"><i class="bi bi-pencil-square fs-7"></i></a>
 								<button type="button" data-item="{{$g->id}}" class="btn btn-icon btn-danger modal-class" data-bs-toggle="modal" data-bs-target="#kt_modal_2">

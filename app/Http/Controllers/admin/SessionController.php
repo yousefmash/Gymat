@@ -26,11 +26,13 @@ class SessionController extends Controller
                                 ->whereNull('leave')
                                 ->leftJoin('users', 'user_sessions.user_id', '=', 'users.id')
                                 ->select('user_sessions.*', 'users.name as user_name')
+                                ->orderBy('created_at', 'DESC')
                                 ->get();
             $arr['day_sessions'] = user_session::where('user_sessions.gym_id', Auth::user()->gym_id)
                                 ->whereDate('user_sessions.created_at', Carbon::today()->format('Y-m-d'))
                                 ->leftJoin('users', 'user_sessions.user_id', '=', 'users.id')
                                 ->select('user_sessions.*', 'users.name as user_name')
+                                ->orderBy('created_at', 'DESC')
                                 ->get();
                 return view('sessions.dashboard')->with($arr);
 
@@ -41,8 +43,10 @@ class SessionController extends Controller
     {  
         if (auth::check()) {
             if (auth::check()) {
+                /*-----------------------begin::add arrival user-----------------------*/
                 $users_gym_id=Auth::user()->gym_id*10000;
-                if($request['user_type']=='name'){$user = User::where([['name',$request['user']],['gym_id',Auth::user()->gym_id]])->first();}
+                if($request['user_type']=='name'){$user = User::where([['name',$request['user']],['gym_id',Auth::user()->gym_id]])
+                    ->first();}
                 elseif($request['user_type']=='phone'){$user = User::where('phone',$request['user'])->first();}
                 elseif($request['user_type']=='id'){$user = User::where('id',$request['user']+$users_gym_id)->first();}
                 if ($user) {
@@ -55,6 +59,8 @@ class SessionController extends Controller
                     }
                     return redirect()->back();
                 }else{return redirect()->back();}
+                /*-----------------------end::add arrival user-----------------------*/
+
             }else{return redirect('/login');}
         }
     }
@@ -63,8 +69,10 @@ class SessionController extends Controller
     {  
         if (auth::check()) {
             if (auth::check()) {
+                /*-----------------------begin::add leave user-----------------------*/
                 $users_gym_id=Auth::user()->gym_id*10000;
-                if($request['user_type']=='name'){$user = User::where([['name',$request['user']],['gym_id',Auth::user()->gym_id]])->first();}
+                if($request['user_type']=='name'){$user = User::where([['name',$request['user']],['gym_id',Auth::user()->gym_id]])
+                    ->first();}
                 elseif($request['user_type']=='phone'){$user = User::where('phone',$request['user'])->first();}
                 elseif($request['user_type']=='id'){$user = User::where('id',$request['user']+$users_gym_id)->first();}
                 if ($user) {
@@ -76,6 +84,7 @@ class SessionController extends Controller
                     }
                     return redirect()->back();
                 }else{return redirect()->back();}
+                /*-----------------------end::add leave user-----------------------*/
             }else{return redirect('/login');}
         }
     }

@@ -1,10 +1,8 @@
 @extends('index')
 <?php $packages_num = 0; ?>
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">السجل المالي للمشترك</li>
-</ol>
 @endsection
 
 @section('admin_content')

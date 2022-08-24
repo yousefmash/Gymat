@@ -13,7 +13,7 @@
 			<!--begin::Modal body-->
 			<div class="modal-body scroll-y mx-lg-5 my-7">
 				<!--begin::Form-->
-				<form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( 'admin/gym-Package/store') }}">
+				<form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( 'admin/gym-package/store') }}">
 					@csrf
 					<!--begin::Scroll-->
 					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="add_form_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#add_form_header" data-kt-scroll-wrappers="#add_form_scroll" data-kt-scroll-offset="300px" style="">

@@ -5,11 +5,9 @@
 @endsection
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
     <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/diet/meals")}}" class="px-3">الوجبات</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الوجبة</li>
-</ol>
 @endsection
 
 @section('admin_content')

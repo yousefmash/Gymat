@@ -24,7 +24,8 @@ class PackageController extends Controller
     }
 
     public function store(PackagesRequest $request)
-    {   
+    {                   
+        /*-----------------------begin::add user package-----------------------*/
         $package = new Package();
         $package->name = $request['name'];
         $package->price = $request['price'];
@@ -39,7 +40,8 @@ class PackageController extends Controller
         $package->gym_id = Auth::user()->gym_id;
 
         $result =$package->save();
-        
+        /*-----------------------end::add user package-----------------------*/
+
         return redirect()->back();
     }
 
@@ -92,7 +94,7 @@ class PackageController extends Controller
     }
 
 
-    public function destroy($id)
+    public function destroy($gymname,$id)
     {   
         $package = Package::where('id', $id)->first();
         $user = User::where('package_id',$package->id)->first();

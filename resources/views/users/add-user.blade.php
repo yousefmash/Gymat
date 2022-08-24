@@ -1,8 +1,10 @@
-<button type="button" class="btn btn-primary btn-hover-scale me-5" data-bs-toggle="modal" data-bs-target="#kt_modal_1">
+@if ($button)
+<button type="button" class="btn btn-primary btn-hover-scale me-5" data-bs-toggle="modal" data-bs-target="#add_user_modal">
     إضافة مشترك
 </button>
+@endif
 
-<div class="modal fade" tabindex="-1" id="kt_modal_1">
+<div class="modal fade" tabindex="-1" id="add_user_modal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -30,7 +32,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">الجنس:</label>
-                                <select class="form-select" name="gender" data-control="select2" data-placeholder="إختر">
+                                <select class="form-select" name="gender" data-placeholder="إختر">
                                     <option></option>
                                     <option value="ذكر">ذكر</option>
                                     <option value="أنثى">أنثى</option>
@@ -38,7 +40,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label">نوع المشترك:</label>
-                                <select class="form-select" name="job" data-control="select2" data-placeholder="إختر">
+                                <select class="form-select" name="job" data-placeholder="إختر">
                                     <option value="1" checked="checked">مشترك</option>
                                     <option value="4">محاسب</option>
                                     <option value="5">مدرب</option>

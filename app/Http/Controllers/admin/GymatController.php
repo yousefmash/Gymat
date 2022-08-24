@@ -4,7 +4,9 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GymatRequest;
+use App\Models\financial_balance;
 use App\Models\GYM;
+use App\Models\gym_contract;
 use App\Models\gym_Package;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -29,12 +31,27 @@ class GymatController extends Controller
 
     public function store(GymatRequest $request)
     {   
+        /*-----------------------begin::add gym-----------------------*/
         $gym = new GYM();
         $gym->name = $request['name'];
         $gym->phone = $request['phone'];
-        $gym->gym_package_id = $request['gym_package_id'];
         $gym->user_id = auth::user()->id;
         $result =$gym->save();
+        /*-----------------------end::add gym-----------------------*/
+
+        /*-----------------------begin::add gym contract-----------------------*/
+        $gym_contract = new gym_contract();
+        $gym_contract->package_id = $request['gym_package_id'];
+        $gym_contract->gym_id = $gym->id;
+        $gym_contract->state = 1;
+        $result =$gym_contract->save();
+        /*-----------------------end::add gym contract-----------------------*/
+
+        /*-----------------------begin::add gym balance-----------------------*/
+        $balance = new financial_balance();
+        $balance->gym_id = $gym->id;
+        $result =$balance->save();
+        /*-----------------------end::add gym balance-----------------------*/
 
         return redirect()->back();
     }
@@ -79,7 +96,16 @@ class GymatController extends Controller
             $gym->address = $request['address'];
         }
         if ($request['gym_package_id']) {
-            $gym->gym_package_id = $request['gym_package_id'];
+            $gym_contract_active = gym_contract::where([['gym_id',$id],['state',1]])->first();
+            if ($gym_contract_active) {
+                $gym_contract_active->state = 0;
+                $result =$gym_contract_active->save;
+            }
+            $gym_contract = new gym_contract();
+            $gym_contract->package_id = $request['gym_package_id'];
+            $gym_contract->gym_id = $gym->id;
+            $gym_contract->state = 1;
+            $result =$gym_contract->save;
         }
         $result =$gym->save();
 

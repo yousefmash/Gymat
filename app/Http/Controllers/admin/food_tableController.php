@@ -16,11 +16,10 @@ use Illuminate\Support\Facades\Cookie;
 
 class Food_tableController extends Controller
 {
-    public function index()
+    public function index($gymname)
     {
         if (auth::check()){
         $dits=['active'=>0,'new'=>0,'check'=>0]; 
-
         $new_tables = food_table::where([['food_table.coach_id',Auth::user()->id],['food_table.state',0]])
                         ->leftJoin('users', 'food_table.user_id', '=', 'users.id')
                         ->select('food_table.*', 'users.name as user_name')->get();
@@ -44,7 +43,7 @@ class Food_tableController extends Controller
         }else{return redirect('/login');}
     }
     
-    public function store(store_Food_tableRequest $request,$id)
+    public function store($gymname,store_Food_tableRequest $request,$id)
     {
         $food_table = food_table::where('user_id',$id)->first();
 
@@ -95,7 +94,7 @@ class Food_tableController extends Controller
 
         return redirect()->back();
     }
-    public function food_table_search(User_SearchRequest $request)
+    public function food_table_search($gymname,User_SearchRequest $request)
     {  
         if (auth::check()) {
             if (auth::check()) {
@@ -124,6 +123,32 @@ class Food_tableController extends Controller
         $food_table->meals = $new_meals;
         $result =$food_table->save();
         return redirect()->back();
+    }
+    
+    public function show ($gymname)
+    {
+        if (auth::check()){
+            $food_table_meals= [];
+            $sum_calories = 0;
+            $food_table= food_table::where('user_id', Auth::user()->id)->first();
+            if ($food_table) {
+                foreach (explode('|',$food_table->meals) as $f){
+                    if ($f) {
+                        $meal = meal::where('id', $f)->first();
+                        $sum_calories += $meal->calories ;
+                        array_push($food_table_meals,$meal);               
+                    } 
+                }
+            }else{
+                $food_table = null;
+                $food_table_meals = null;
+                $sum_calories = null;
+            }
+            
+            return view('user-pages.show-food_table')
+            ->with('food_table',$food_table)
+            ->with('food_table_meals',$food_table_meals)->with('sum_calories',$sum_calories);
+        }else{return redirect('/login');}
     }
 
 }

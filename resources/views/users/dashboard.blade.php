@@ -5,10 +5,8 @@
 @endsection
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">المشتركين</li>
-</ol>
 @endsection
 
 @section('admin_content')
@@ -22,7 +20,7 @@
 			<!--end::Card title-->
 			<!--begin::Card toolbar-->
 			<div class="card-toolbar">
-				@include('users.add-user')
+				@include('users.add-user',['button'=> true])
 			</div>
 			<!--end::Card toolbar-->
 		</div>
@@ -34,7 +32,6 @@
 						<th>الإسم</th>
 						<th>رقم الهاتف</th>
 						<th>الجنس</th>
-						<th>الباقة</th>
 						<th>نوع المشترك</th>
 						<th >تعديل|حذف</th>
 					</tr>
@@ -46,7 +43,6 @@
 							<td>{{ $u->name }}</td>
 							<td>{{ $u->phone }}</td>
 							<td>{{ $u->gender }}</td>
-							<td>{{ $u->package_name }}</td>
 							<td>
 								@switch($u->job_name)
 									@case('user')

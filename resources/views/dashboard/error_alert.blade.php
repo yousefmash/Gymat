@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" tabindex="-1" id="myModal">
+<div class="modal fade" tabindex="-1" id="Error-Modal">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-body d-block justify-content-center">

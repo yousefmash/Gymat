@@ -2,11 +2,9 @@
 @extends('index')
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
 	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
     <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/users")}}" class="px-3">الأنظمة الغذائية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل النظام للمشترك</li>
-</ol>
 @endsection
 
 @section('admin_content')

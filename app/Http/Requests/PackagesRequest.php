@@ -28,8 +28,8 @@ class PackagesRequest extends FormRequest
             'price' => 'required|integer',
             'workout_days' => 'required|integer',
             'duration' => 'required|integer',
-            'sauna' => 'numeric',
-            'steam' => 'numeric',
+            'sauna' => 'nullable|numeric',
+            'steam' => 'nullable|numeric',
         ];
     }
 
@@ -42,7 +42,7 @@ class PackagesRequest extends FormRequest
             'price.integer' => 'السعر يتكون من أرقام فقط',
             'workout_days.required' => 'يجب إضافة عدد أيام التمارين !',
             'workout_days.integer' => 'عدد أيام التمارين يتكون من أرقام فقط',
-            'duration.required' => 'يجب إضافة عدد أيام التمارين !',
+            'duration.required' => 'يجب إضافة عدد أيام الاشتراك !',
             'duration.integer' => 'عدد أيام التمارين يتكون من أرقام فقط',
             'sauna.numeric' => 'يجب أن يكون جلسات الساونا رقم',
             'steam.numeric' => 'يجب أن يكون جلسات البخار رقم',

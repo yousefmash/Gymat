@@ -5,11 +5,9 @@
 @endsection
 
 @section('breadcrumb')
-<ol class="breadcrumb text-muted fs-6 fw-bold">
-	<li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/dashboard")}}" class="px-3">الرئيسية</a></li>
-    <li class="breadcrumb-item"><a href="{{url( Cookie::get('gym_name')."/gym-Package")}}" class="px-3">باقات الصالات الرياضية</a></li>
+	<li class="breadcrumb-item"><a href="{{url("admin/dashboard")}}" class="px-3">الرئيسية</a></li>
+    <li class="breadcrumb-item"><a href="{{url("admin/gym-package")}}" class="px-3">باقات الصالات الرياضية</a></li>
 	<li class="breadcrumb-item px-3 text-muted">تعديل الباقة</li>
-</ol>
 @endsection
 
 @section('admin_content')
@@ -117,7 +115,7 @@
 			<!--begin::Modal body-->
 			<div class="modal-body scroll-y mx-lg-5 my-7">
 				<!--begin::Form-->
-				<form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( Cookie::get('gym_name').'/package/update'.'/'.$package->id) }}">
+				<form id="add_form" class="form fv-plugins-bootstrap5 fv-plugins-framework" method="post" action="{{ URL( '/admin/gym-package/update'.'/'.$package->id) }}">
 					@csrf
 					<!--begin::Scroll-->
 					<div class="d-flex flex-column scroll-y me-n7 pe-7" id="add_form_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#add_form_header" data-kt-scroll-wrappers="#add_form_scroll" data-kt-scroll-offset="300px" style="">
@@ -182,7 +180,7 @@
 												<!--begin::Wrapper-->
 												<div class="d-flex">
 													<label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-														<input class="form-control form-control-solid" type="text" value="{{  $package->duration }}" name="duration">
+														<input class="form-control form-control-solid" type="text" value="{{$package->duration}}" name="duration">
 													</label>
 												</div>
 												<!--end::Wrapper-->

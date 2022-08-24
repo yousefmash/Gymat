@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Gym_PackagesRequest;
 use App\Models\food_table;
 use App\Models\GYM;
+use App\Models\gym_contract;
 use App\Models\gym_package;
 use App\Models\User;
 use App\Models\Package;
@@ -39,7 +40,8 @@ class Gym_PackageController extends Controller
     {   
         if (auth::check()){
             $package= gym_package::where('id', $id)->first();
-            $gymat= gym::where('gym_package_id',$package->id)->get();
+            $gymat= gym_contract::where('package_id',$id)->leftJoin('gym', 'gym_contracts.gym_id', '=', 'gym.id')
+            ->select('gym.*')->get();
             return view('gym_packages.edit-package')->with('package',$package)->with('gymat',$gymat);
         }else{return redirect('/login');}
 
@@ -61,10 +63,12 @@ class Gym_PackageController extends Controller
 
     public function destroy($id)
     {   
-        $package = gym_package::where('id', $id)->first();
-        $gym = gym::where('gym_package_id',$package->id)->first();
+        $gym = gym_contract::where('package_id',$id)->first();
         if (!$gym) {
             $result = gym_package::where('id', $id)->delete();
+        }else{
+            $error='لا يمكن حذف باقة تحتوي على إشتراكات فعالة';
+            return redirect()->back()->withErrors($error);
         }
         return redirect()->back();
     }
